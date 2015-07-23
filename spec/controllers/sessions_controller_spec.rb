@@ -16,12 +16,4 @@ describe SessionsController do
       request.session['username'].should == 'Dennis'
     end
   end
-
-  describe '#destroy' do
-    it "sets the session['logged_in'] to false" do
-      request.session['logged_in'] = true
-      delete :destroy
-      request.session['logged_in'].should == false
-    end
-  end
 end

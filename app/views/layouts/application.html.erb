@@ -36,14 +36,6 @@
             <li>
               <%= link_to "All Standups", standups_path %>
             </li>
-            <% if session['logged_in'] %>
-                <li>
-                  <%= link_to '/logout' do %>
-                      <i class='icon-signout hidden-phone'></i>
-                      <span class='visible-phone'>Logout</span>
-                  <%- end -%>
-                </li>
-            <% end %>
           </ul>
         </div>
     <% else %>
