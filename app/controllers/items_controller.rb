@@ -1,5 +1,6 @@
 class ItemsController < ApplicationController
   before_filter :load_standup, except: [:create]
+  before_filter :gcal_events
 
   def create
     @item = Item.new(params[:item])
@@ -68,5 +69,9 @@ class ItemsController < ApplicationController
     end
 
     @standup = StandupPresenter.new(standup)
+  end
+
+  def gcal_events
+    GoogleCalender.events(session[:gcal_token], params[:standup_id])
   end
 end

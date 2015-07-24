@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131017003125) do
+ActiveRecord::Schema.define(version: 20150724185251) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,13 +21,15 @@ ActiveRecord::Schema.define(version: 20131017003125) do
     t.text     "description"
     t.string   "kind"
     t.integer  "post_id"
-    t.boolean  "public",      default: false
-    t.boolean  "bumped",      default: false
+    t.boolean  "public",        default: false
+    t.boolean  "bumped",        default: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "standup_id"
     t.date     "date"
     t.string   "author"
+    t.string   "source",        default: "user"
+    t.string   "gcal_event_id"
   end
 
   create_table "posts", force: true do |t|

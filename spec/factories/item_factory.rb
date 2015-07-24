@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :item do
-    title "Focused specs are broken"
+    sequence(:title) { |n| Faker::Lorem.word + n.to_s }
     kind "Help"
     date Date.today
 
@@ -12,7 +12,7 @@ FactoryGirl.define do
   end
 
   factory :new_face, class: Item do
-    title "John"
+    sequence(:title) { |n| Faker::Lorem.word + n.to_s }
     kind "New face"
     date Date.today
 

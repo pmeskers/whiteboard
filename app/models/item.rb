@@ -13,7 +13,7 @@ class Item < ActiveRecord::Base
 
   validates_inclusion_of :kind, in: KINDS.map { |k| k[:name] }
   validates :standup, presence: true
-  validates :title, presence: true
+  validates :title, presence: true, uniqueness: { scope: [:standup_id, :gcal_event_id] }
   validate :face_is_in_the_future
 
   attr_accessible :title, :description, :kind, :public, :post_id, :date, :standup_id, :author

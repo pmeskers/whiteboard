@@ -1,10 +1,32 @@
 require 'spec_helper'
 
+class MockGcalEvent
+  def summary
+    "mock title"
+  end
+  def description
+    "mock description"
+  end
+end
+
+
 describe ItemsController do
   let(:standup) { create(:standup) }
   let(:params) { {standup_id: standup.id} }
+
+  let(:gcal_events) { [ MockGcalEvent.new ] }
+
   before do
     request.session[:logged_in] = true
+    allow_message_expectations_on_nil
+  end
+
+  before(:each) do
+    Google::APIClient.any_instance.stub_chain(:authorization, :access_token=)
+    Google::APIClient.any_instance.stub(:discovered_api)
+    Google::APIClient.any_instance.stub_chain(:discovered_api, :calendar_list, :list)
+    Google::APIClient.any_instance.stub_chain(:execute, :status).and_return(200)
+    Google::APIClient.any_instance.stub_chain(:execute, :data, :items).and_return(gcal_events)
   end
 
   describe "#create" do

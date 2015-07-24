@@ -15,6 +15,8 @@ gem 'coffee-rails'
 gem 'uglifier'
 gem 'bootstrap-sass', '~> 2.3.2'
 gem 'font-awesome-sass-rails'
+gem 'raganwald-andand'
+gem 'google-api-client', :require => 'google/api_client'
 
 group :development, :production do
   gem 'rails_12factor'
