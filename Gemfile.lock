@@ -256,6 +256,7 @@ DEPENDENCIES
   better_errors
   binding_of_caller
   bootstrap-sass (~> 2.3.2)
+  bundler (= 1.10.6)
   capybara
   capybara-accessible
   capybara-webkit
@@ -290,4 +291,4 @@ DEPENDENCIES
   unicorn
 
 BUNDLED WITH
-   1.10.5
+   1.10.6
