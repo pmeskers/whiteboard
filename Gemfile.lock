@@ -1,3 +1,10 @@
+GIT
+  remote: git://github.com/pivotal/evaporator.git
+  revision: d5ff2c94c51d09a810ca49d8283fc76a3f20a523
+  specs:
+    evaporator (0.1.0)
+      rails (~> 4.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -256,6 +263,7 @@ DEPENDENCIES
   compass-rails
   database_cleaner
   dotenv (~> 0.9.0)
+  evaporator (~> 0.1.0)!
   exceptional
   factory_girl_rails
   fakefs
@@ -280,3 +288,6 @@ DEPENDENCIES
   timecop
   uglifier
   unicorn
+
+BUNDLED WITH
+   1.10.5

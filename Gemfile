@@ -15,6 +15,7 @@ gem 'coffee-rails'
 gem 'uglifier'
 gem 'bootstrap-sass', '~> 2.3.2'
 gem 'font-awesome-sass-rails'
+gem 'evaporator', '~> 0.1.0', github: 'pivotal/evaporator'
 
 group :development, :production do
   gem 'rails_12factor'
