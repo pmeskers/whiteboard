@@ -6,19 +6,21 @@ describe "Adding new faces", js: true do
   let(:date_five_days) { timezone.now + 5.days }
 
   it "doesn't allow start dates in the past" do
+    new_face_date = Date.new(1999, 1, 8).to_s
+
     login
     visit '/'
 
     click_on standup.title
-    find(:css, '[data-kind="New face"]').click
-    fill_in "item[title]", with: "Jane"
-
-    fill_in "item[date]", with: "2010-01-01"
+    find(:css, '.new_face .icon-plus-sign').click
+    find(:css, '[name="item[date]"]').click
+    fill_in "item[date]", with: new_face_date
 
     find(:css, '[name="item[date]"]').click
-    find(:css, 'td.day', text: '11').click
+    find(:css, '.next').click
 
-    find_field("item[date]").value.should == "2010-01-01"
+    find_field("item[date]").value.should == new_face_date
+    blur(page)
 
     click_on "Create New Face"
 
@@ -38,8 +40,6 @@ describe "Adding new faces", js: true do
       fill_in 'post[title]', with: 'Test Cases Rule'
 
       find('#create-post').click
-
-      page.driver.browser.switch_to.alert.accept
 
       page.should_not have_content "Unable to create post"
       current_path.should_not eq(standup_items_path(standup))

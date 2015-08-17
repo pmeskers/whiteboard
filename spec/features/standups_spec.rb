@@ -54,7 +54,6 @@ describe "standups", type: :request do
   it "allows you to delete existing standups", js: true do
     click_on_preferences(page)
     click_on 'Delete Standup'
-    page.driver.browser.switch_to.alert.accept
 
     current_url.should match(/http:\/\/127\.0\.0\.1:\d*\/standups$/)
     page.should_not have_content 'London Whiteboard'

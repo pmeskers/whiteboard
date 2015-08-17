@@ -64,8 +64,6 @@ describe "publishing", type: :request, js: true do
 
     click_on 'Post Blog Entry'
 
-    page.driver.browser.switch_to.alert.accept
-
     within '.alert.alert-error' do
       page.should have_content('Wrong size. Was 180, should be 131')
     end
@@ -94,8 +92,6 @@ describe "publishing", type: :request, js: true do
     click_on "Create Post"
 
     click_on 'Post Blog Entry'
-
-    page.driver.browser.switch_to.alert.accept
 
     page.should have_content("This entry was posted at")
     page.should have_css('a', text: 'best-post-eva')

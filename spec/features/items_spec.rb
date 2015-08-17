@@ -29,37 +29,37 @@ describe "items", type: :request, js: true do
 
     find('a[data-kind="New face"] i').click
     fill_in 'item_title', :with => "Johnathon McKenzie"
-    fill_in 'item_date', :with => date_today
+    fill_date_selector_with date_today
     select 'San Francisco', from: 'item[standup_id]'
     click_button 'Create New Face'
 
     find('a[data-kind="New face"] i').click
     fill_in 'item_title', :with => "Jane Doe"
-    fill_in 'item_date', :with => date_five_days
+    fill_date_selector_with date_five_days
     select 'San Francisco', from: 'item[standup_id]'
     click_button 'Create New Face'
 
     find('a[data-kind="Event"] i').click
     fill_in 'item_title', :with => "Meetup"
-    fill_in 'item_date', :with => date_five_days
+    fill_date_selector_with date_five_days
     select 'New York', from: 'item[standup_id]'
     click_button 'Create Item'
 
     find('a[data-kind="Event"] i').click
     fill_in 'item_title', :with => "Party"
-    fill_in 'item_date', :with => date_five_days
+    fill_date_selector_with date_five_days
     select 'San Francisco', from: 'item[standup_id]'
     click_button 'Create Item'
 
     find('a[data-kind="Event"] i').click
     fill_in 'item_title', :with => "Happy Hour"
-    fill_in 'item_date', :with => date_today
+    fill_date_selector_with date_today
     select 'San Francisco', from: 'item[standup_id]'
     click_button 'Create Item'
 
     find('a[data-kind="Event"] i').click
     fill_in 'item_title', :with => "Baseball"
-    fill_in 'item_date', :with => date_tomorrow
+    fill_date_selector_with date_tomorrow
     select 'San Francisco', from: 'item[standup_id]'
     click_button 'Create Item'
 
@@ -210,4 +210,9 @@ describe "items", type: :request, js: true do
       page.should have_content "Woohoo"
     end
   end
+end
+
+def fill_date_selector_with(date)
+  fill_in 'item_date', :with => date
+  blur(page)
 end

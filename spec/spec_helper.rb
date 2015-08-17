@@ -6,9 +6,8 @@ require 'rspec/autorun'
 
 require 'capybara/rails'
 require 'capybara/rspec'
-Capybara.javascript_driver = :selenium
+Capybara.javascript_driver = :webkit
 Capybara.default_driver = :webkit
-Selenium::WebDriver::Firefox::Binary.path = ENV['FIREFOX_BINARY_PATH'] || Selenium::WebDriver::Firefox::Binary.path
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
@@ -28,6 +27,11 @@ RSpec.configure do |config|
 
   config.before(:each) do
     DatabaseCleaner.start
+  end
+
+  config.before(:all, type: :feature) do
+    current_session = Capybara.current_session
+    current_session.driver.resize_window(2000, 2000)
   end
 
   config.after(:each) do
@@ -58,5 +62,9 @@ RSpec.configure do |config|
   def click_on_preferences(page)
     page.find('a.btn.btn-navbar').click if page.has_css?('.btn.btn-navbar')
     click_on 'Preferences'
+  end
+
+  def blur(page)
+    page.find(:css, 'body').click
   end
 end
