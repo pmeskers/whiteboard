@@ -2,8 +2,11 @@
 language: ruby
 bundler_args: --without development
 
+env:
+  secure: "gMvIYh5U4Z8Cr2rxrSZItWhkRqTtHXNpB7q9KmbtVFplLY5vz6RWY+tJWOg2y8Y71XpjYQMBy5Y00f8ZcoRm3NJ9Po9+S5uHglPSMg82mw1zClPGKGm7vrL8QT6qCkCx0L4dIuenb540hZ9eDs+xvHAfXk4vcez/SEWfi/c2Kvg="
+
 notifications:
-  slack: pivotal:<%= ENV['TRAVIS_KEY'] %>
+  slack: TRAVIS_KEY
 
 before_install:
   - export DISPLAY=:99.0
