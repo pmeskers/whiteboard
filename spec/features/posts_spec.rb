@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe "posts", type: :request do
+describe "posts" do
   let!(:standup) { FactoryGirl.create(:standup, title: 'San Francisco') }
 
   describe "archived posts" do

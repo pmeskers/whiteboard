@@ -1,6 +1,5 @@
 source 'https://rubygems.org'
-ruby '2.1.5'
-gem 'rails', '4.1.0.rc1'
+gem 'rails', '4.1.9'
 
 gem 'pg'
 gem 'unicorn'
@@ -9,7 +8,7 @@ gem 'omniauth-google-oauth2'
 gem 'github-markdown', require: 'github/markdown'
 gem 'exceptional'
 gem 'protected_attributes'
-gem 'sass-rails'
+gem 'sass-rails', '4.0.3'
 gem 'compass-rails'
 gem 'coffee-rails'
 gem 'uglifier'
@@ -23,7 +22,7 @@ end
 
 group :test, :development do
   gem 'minitest'
-  gem 'rspec-rails', '2.14.0'
+  gem 'rspec-rails', '3.0.0'
   gem 'shoulda-matchers'
   gem 'factory_girl_rails'
   gem 'faker'

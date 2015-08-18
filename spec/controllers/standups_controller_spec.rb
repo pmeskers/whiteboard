@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe StandupsController do
   let(:standup) { create(:standup) }

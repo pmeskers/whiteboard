@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe "Adding new faces", js: true do
   let!(:standup) { FactoryGirl.create(:standup, ip_addresses_string: "127.0.0.1/32") }

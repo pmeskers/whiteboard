@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe "standups", type: :request do
+describe "standups" do
   before do
     login
     visit '/'
