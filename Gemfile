@@ -36,7 +36,7 @@ group :test, :development do
   gem 'timecop'
   gem 'foreman'
   gem 'fakefs', :require => 'fakefs/safe'
-  gem 'dotenv', '~> 0.9.0'
+  gem 'dotenv-rails'
   gem 'pry-rails'
 end
 
