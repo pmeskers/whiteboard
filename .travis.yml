@@ -3,7 +3,7 @@ bundler_args: "--without development"
 addons:
   code_climate:
     repo_token:
-      secure: VTel8SABYIABU98M/ki2PesW7HLogE+RJFEo1jbKnB2brHtPM/lPo04JBvGCiL/BZ9KdIgUF/NN8ylM+cR7LBq9xPDcnw00H82OS5A2lweBo9a+pQys6E8F3eYDSRGY3+KdHlmG6nlnqMwRWBRySinyYH+erpXd7mQm8ZrUlfgE=
+      secure: CQX/SC+6qqpKgYtqe/MxY7yZyx9tSEgNuvWzgBhg71OHoCUUV0mnZdDmsXkX2QgkEnWGpsTsPyyqRBBvZaR+SbqdQVwMFiqmo1Ij4nsMJuwQKLADUkNCV0WhWW/M1fqRaRR/r85CD6TUezot943aaDzNvy7oeVspiERIpuqiuNU=
 notifications:
   slack:
     rooms:
