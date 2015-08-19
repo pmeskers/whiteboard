@@ -44,7 +44,7 @@ describe StandupsController do
         get :index
 
         response.should be_ok
-        assigns[:standups].should == [standup1, standup2]
+        expect(assigns[:standups]).to include(standup1, standup2)
       end
     end
 
@@ -61,8 +61,20 @@ describe StandupsController do
         get :index
 
         response.should be_ok
-        assigns[:standups].should == [standup1, standup2]
+        expect(assigns[:standups]).to include standup1, standup2
       end
+    end
+
+    it 'sorts all standups alphabetically' do
+      second = create(:standup, title: 'Bravo Badger')
+      first = create(:standup, title: 'Alpha Aardvark')
+      fourth = create(:standup, title: 'ZULU Zebra')
+      third = create(:standup, title: 'Zooloo Zebra')
+
+      get :index
+
+      response.should be_ok
+      expect(assigns[:standups]).to eq [first, second, third, fourth]
     end
   end
 

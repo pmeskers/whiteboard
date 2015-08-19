@@ -15,7 +15,7 @@ class StandupsController < ApplicationController
   end
 
   def index
-    @standups = Standup.all
+    @standups = Standup.all.sort{ |a,b| a.title.downcase <=> b.title.downcase }
   end
 
   def edit
