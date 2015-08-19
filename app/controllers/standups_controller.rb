@@ -15,12 +15,7 @@ class StandupsController < ApplicationController
   end
 
   def index
-    if session[:logged_in]
-      @standups = Standup.all
-    else
-      mapper = IpToStandupMapper.new
-      @standups = mapper.standups_matching_ip_address(ip_address: request.remote_ip)
-    end
+    @standups = Standup.all
   end
 
   def edit

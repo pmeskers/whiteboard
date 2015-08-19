@@ -54,14 +54,14 @@ describe StandupsController do
         request.session[:logged_in] = false
       end
 
-      it "renders an index of the whitelisted of the standups" do
+      it 'renders an index of all the standups' do
         standup1 = create(:standup, ip_addresses_string: '0.0.0.9')
         standup2 = create(:standup, ip_addresses_string: '0.0.0.8')
 
         get :index
 
         response.should be_ok
-        assigns[:standups].should == [standup1]
+        assigns[:standups].should == [standup1, standup2]
       end
     end
   end
