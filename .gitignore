@@ -23,3 +23,5 @@ public/assets
 manifest.yml
 
 cf-cli.deb
+
+coverage
