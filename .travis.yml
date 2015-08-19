@@ -1,9 +1,5 @@
 language: ruby
 bundler_args: "--without development"
-addons:
-  code_climate:
-    repo_token:
-      secure: CQX/SC+6qqpKgYtqe/MxY7yZyx9tSEgNuvWzgBhg71OHoCUUV0mnZdDmsXkX2QgkEnWGpsTsPyyqRBBvZaR+SbqdQVwMFiqmo1Ij4nsMJuwQKLADUkNCV0WhWW/M1fqRaRR/r85CD6TUezot943aaDzNvy7oeVspiERIpuqiuNU=
 notifications:
   slack:
     rooms:
