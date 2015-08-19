@@ -7,7 +7,7 @@ addons:
 notifications:
   slack:
     rooms:
-      secure: uKhA3tvH4WiQyRoRpoIsce4i7fYiK3udeGBOOpGbUPxw99uYlc+Go6jx0bWCsRT4sMpboNOAig6A/n+B36gJGFgwMKnxc4pKWSD+68A9yoRHMg3ekur0jP3p+y6Phka4UBF67B4eulPknV2MwHaS8wK3vQE/Gd7xeqa+2JnDTZQ=
+      secure: maWpNOd6DyV+bf1BTHMvRYtAWgnZqrCz7P6Uu9OnxVz9AKgednGV5ZLuJqVtm8l38corAzUC58b4zdtpelD8ExDWZc3auv7I/kInLOM+oDTevONaIlW3GGfTzMB9yyLka5vV/m769e35J3rLsHJr1F/bFsGQGLxPFBsACLAxbXs=
 before_install:
 - export DISPLAY=:99.0
 - sh -e /etc/init.d/xvfb start
