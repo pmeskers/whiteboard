@@ -37,6 +37,7 @@ group :test, :development do
   gem 'fakefs', :require => 'fakefs/safe'
   gem 'dotenv-rails'
   gem 'pry-rails'
+  gem 'byebug'
 end
 
 group :test do

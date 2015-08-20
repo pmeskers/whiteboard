@@ -47,6 +47,7 @@ GEM
     bootstrap-sass (2.3.2.2)
       sass (~> 3.2)
     builder (3.2.2)
+    byebug (6.0.2)
     capistrano (2.14.2)
       highline
       net-scp (>= 1.0.0)
@@ -266,6 +267,7 @@ DEPENDENCIES
   better_errors
   binding_of_caller
   bootstrap-sass (~> 2.3.2)
+  byebug
   capybara
   capybara-accessible
   capybara-webkit

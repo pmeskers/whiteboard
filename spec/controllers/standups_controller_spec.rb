@@ -91,6 +91,11 @@ describe StandupsController do
       get :show, id: standup.id
       response.body.should redirect_to standup_items_path(standup)
     end
+
+    it 'saves standup id to cookie' do
+      get :show, id: standup.id
+      expect(session[:last_visited_standup]).to eq(standup.id.to_s)
+    end
   end
 
   describe "#update" do
@@ -118,6 +123,28 @@ describe StandupsController do
         post :destroy, id: standup.id
       }.to change(Standup, :count).by(-1)
       response.should redirect_to standups_path
+    end
+  end
+
+  describe '#last_or_index' do
+    context 'when user has never visited whiteboard' do
+      it 'redirects to index' do
+        session[:last_visited_standup] = nil
+
+        get :last_or_index
+
+        expect(response).to redirect_to(standups_path)
+      end
+    end
+
+    context 'when user has previously visited a standup' do
+      it 'redirects to index' do
+        session[:last_visited_standup] = 30
+
+        get :last_or_index
+
+        expect(response).to redirect_to(standup_path(30))
+      end
     end
   end
 

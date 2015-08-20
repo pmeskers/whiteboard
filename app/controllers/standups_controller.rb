@@ -24,6 +24,7 @@ class StandupsController < ApplicationController
 
   def show
     @standup = Standup.find(params[:id])
+    session[:last_visited_standup] = params[:id]
     redirect_to standup_items_path(@standup)
   end
 
@@ -41,6 +42,14 @@ class StandupsController < ApplicationController
     @standup = Standup.find(params[:id])
     @standup.destroy
     redirect_to standups_path
+  end
+
+  def last_or_index
+    if session[:last_visited_standup]
+      redirect_to standup_path(session[:last_visited_standup])
+    else
+      redirect_to standups_path
+    end
   end
 
   private

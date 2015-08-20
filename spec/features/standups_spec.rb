@@ -19,7 +19,7 @@ describe "standups" do
     fill_in 'standup_image_urls', with: 'http://example.com/bar.png'
     click_button 'Create Standup'
 
-    visit '/'
+    click_link('All Standups')
     page.should have_content 'LONDON'
     click_link('London')
   end
@@ -57,5 +57,13 @@ describe "standups" do
 
     current_url.should match(/http:\/\/127\.0\.0\.1:\d*\/standups$/)
     page.should_not have_content 'London Whiteboard'
+  end
+
+  it 'takes you to the last standup you viewed' do
+    visit '/'
+    click_link('London')
+
+    visit '/'
+    expect(page).to have_content('London Whiteboard')
   end
 end
