@@ -5,7 +5,7 @@ describe SessionsController do
     before { ActionController::Base.any_instance.should_receive(:verify_authenticity_token).never }
 
     it "sets the session['logged_in'] to true" do
-      request.env['omniauth.auth'] = { 'info' => { 'email' => 'mkocher@pivotal.io' } }
+      request.env['omniauth.auth'] = { 'info' => { 'name' => 'Kocher' } }
       post :create
       request.session['logged_in'].should == true
     end

@@ -3,12 +3,15 @@ class SessionsController < ApplicationController
 
   def create
     session[:logged_in] = true
-    session[:username] = request.env['omniauth.auth']['info']['name']
+    session[:username] = request.env.fetch('omniauth.auth').fetch('info').fetch('name')
     redirect_to '/'
   end
 
   def destroy
     session[:logged_in] = false
+  end
+
+  def new
   end
 
   def require_login

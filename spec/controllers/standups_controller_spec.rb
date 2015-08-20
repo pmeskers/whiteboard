@@ -48,23 +48,6 @@ describe StandupsController do
       end
     end
 
-    context 'when the user is not logged in' do
-      before do
-        request.stub(:remote_ip) { '0.0.0.9' }
-        request.session[:logged_in] = false
-      end
-
-      it 'renders an index of all the standups' do
-        standup1 = create(:standup, ip_addresses_string: '0.0.0.9')
-        standup2 = create(:standup, ip_addresses_string: '0.0.0.8')
-
-        get :index
-
-        response.should be_ok
-        expect(assigns[:standups]).to include standup1, standup2
-      end
-    end
-
     it 'sorts all standups alphabetically' do
       second = create(:standup, title: 'Bravo Badger')
       first = create(:standup, title: 'Alpha Aardvark')
