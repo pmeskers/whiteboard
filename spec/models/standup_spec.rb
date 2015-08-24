@@ -33,40 +33,6 @@ describe Standup do
     standup.closing_message.should == 'Yay'
   end
 
-  describe "#ip_addresses" do
-    context "when separated by newline characters" do
-      it "should convert the string to an array of IPAddr objects" do
-        standup = Standup.new(ip_addresses_string: "127.0.0.1/24\r\n168.2.1.3/8\r\n\r\n")
-
-        standup.ip_addresses.should == [IPAddr.new("127.0.0.1/24"), IPAddr.new("168.2.1.3/8")]
-      end
-    end
-
-    context "when separated by carriage returns" do
-      it "should convert the string to an array of IPAddr objects" do
-        standup = Standup.new(ip_addresses_string: "127.0.0.1/24\r168.2.1.3/8\r\r")
-
-        standup.ip_addresses.should == [IPAddr.new("127.0.0.1/24"), IPAddr.new("168.2.1.3/8")]
-      end
-    end
-
-    context "when separated by white spaces" do
-      it "should convert the string to an array of IPAddr objects" do
-        standup = Standup.new(ip_addresses_string: "127.0.0.1/24\t168.2.1.3/8\t\t")
-
-        standup.ip_addresses.should == [IPAddr.new("127.0.0.1/24"), IPAddr.new("168.2.1.3/8")]
-      end
-    end
-
-    context "when separated by commas" do
-      it "should convert the string to an array of IPAddr objects" do
-        standup = Standup.new(ip_addresses_string: "127.0.0.1/24, 168.2.1.3/8, \r\t\t")
-
-        standup.ip_addresses.should == [IPAddr.new("127.0.0.1/24"), IPAddr.new("168.2.1.3/8")]
-      end
-    end
-  end
-
   describe "dates" do
     before do
       @utc_today = Time.new(2012, 1, 1).utc.to_date
@@ -122,7 +88,6 @@ describe Standup do
           subject_prefix: "[FOO]",
           closing_message: "Go Running.",
           time_zone_name: "Mountain Time (US & Canada)",
-          ip_addresses_string: "127.0.0.1",
           start_time_string: "9:00am",
           image_urls: 'http://example.com/bar.png',
           image_days: '["M"]'

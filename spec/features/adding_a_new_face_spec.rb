@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe "Adding new faces", js: true do
-  let!(:standup) { FactoryGirl.create(:standup, ip_addresses_string: "127.0.0.1/32") }
+  let!(:standup) { FactoryGirl.create(:standup) }
   let(:timezone) { ActiveSupport::TimeZone.new(standup.time_zone_name) }
   let(:date_five_days) { timezone.now + 5.days }
 

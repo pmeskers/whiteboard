@@ -4,8 +4,7 @@ class ApplicationController < ActionController::Base
   before_filter :require_login
 
   def require_login
-    mapper = IpToStandupMapper.new
-    redirect_to '/login' unless session[:logged_in] # || mapper.authorized?(ip_address_string: request.remote_ip)
+    redirect_to '/login' unless session[:logged_in]
   end
 
   # Adds an outer container element around any yielded HTML.

@@ -1,6 +1,6 @@
 class StandupsController < ApplicationController
   def create
-    @standup = standup_service.create(attributes: params[:standup])
+    @standup = Standup.create(params[:standup])
 
     if @standup.persisted?
       flash[:notice] = "#{@standup.title} Standup successfully created"
@@ -29,12 +29,12 @@ class StandupsController < ApplicationController
   end
 
   def update
-    @standup = standup_service.update(id: params[:id], attributes: params[:standup])
+    @standup = Standup.find(params[:id])
 
-    if @standup.changed?
-      render 'standups/edit'
-    else
+    if @standup.update(params[:standup])
       redirect_to @standup
+    else
+      render 'standups/edit'
     end
   end
 
@@ -50,11 +50,5 @@ class StandupsController < ApplicationController
     else
       redirect_to standups_path
     end
-  end
-
-  private
-
-  def standup_service
-    @standup_service ||= StandupService.new()
   end
 end

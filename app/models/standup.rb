@@ -3,7 +3,7 @@ require "ipaddr"
 class Standup < ActiveRecord::Base
   TIME_FORMAT = /(\d{1,2}):(\d{2})\s*(am|pm)/i
 
-  attr_accessible :title, :to_address, :subject_prefix, :closing_message, :time_zone_name, :ip_addresses_string, :start_time_string, :image_urls, :image_days
+  attr_accessible :title, :to_address, :subject_prefix, :closing_message, :time_zone_name, :start_time_string, :image_urls, :image_days
   serialize :image_days
 
   has_many :items, dependent: :destroy
@@ -19,12 +19,6 @@ class Standup < ActiveRecord::Base
 
   def date_tomorrow
     date_today + 1.day
-  end
-
-  def ip_addresses
-    (ip_addresses_string || "").split(/\s|,/).map(&:strip).select(&:present?).map do |string|
-      IPAddr.new(string)
-    end
   end
 
   def time_zone

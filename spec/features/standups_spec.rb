@@ -4,7 +4,7 @@ describe "standups" do
   before do
     login
     visit '/'
-    FactoryGirl.create(:standup, ip_addresses_string: "127.0.0.1/32")
+    FactoryGirl.create(:standup)
 
     find('h2').should have_content 'CHOOSE A STANDUP'
     click_link('New Standup')
@@ -14,7 +14,6 @@ describe "standups" do
     select 'Mountain Time (US & Canada)', from: "standup_time_zone_name"
     fill_in 'standup_to_address', with: "all@pivotallabs.com"
     fill_in 'standup_closing_message', with: "Woohoo"
-    fill_in 'standup_ip_addresses_string', with: "192.168.0.0/24\n\r192.168.1.5\n\r127.0.0.1"
     fill_in 'standup_start_time_string', with: '10:00am'
     fill_in 'standup_image_urls', with: 'http://example.com/bar.png'
     click_button 'Create Standup'
@@ -43,12 +42,6 @@ describe "standups" do
     page.should have_css('input[value="Woohoo"]')
     page.should have_css('option[value="Mountain Time (US & Canada)"][selected]')
     page.should have_css('input[value="10:00am"]')
-
-    within '.ip_addresses textarea' do
-      page.should have_content('192.168.0.0/24')
-      page.should have_content('192.168.1.5')
-      page.should have_content('127.0.0.1')
-    end
   end
 
   it "allows you to delete existing standups", js: true do

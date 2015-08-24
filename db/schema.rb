@@ -51,7 +51,6 @@ ActiveRecord::Schema.define(version: 20131017003125) do
     t.datetime "updated_at"
     t.string   "closing_message"
     t.string   "time_zone_name",      default: "Eastern Time (US & Canada)", null: false
-    t.text     "ip_addresses_string"
     t.string   "start_time_string",   default: "9:06am"
     t.text     "image_urls"
     t.string   "image_days"
