@@ -23,7 +23,9 @@
       </button>
     </div>
     <div class="hint">
-      Please do not post client information to the blog without explicit permission.
+      <div>Private items are not posted to the Blog.</div>
+      <div>All items are visible to anyone on Pivotal's Guest network.</div>
+      <div>Do not post confidential information.</div>
     </div>
     <%= f.hidden_field :public, value: @item.public ? '1' : '0' %>
   </div>
