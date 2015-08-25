@@ -1,20 +1,6 @@
 require 'rails_helper'
 
 describe 'Authenticating', type: :feature do
-  describe 'Logging In' do
-    before do
-      log_in_to_okta('email@blah.com')
-    end
-
-    it 'allows you to log in and view the dashboard' do
-      visit '/login'
-      expect(page).to have_content('Log in with Okta')
-      click_on 'Log in with Okta'
-      expect(page).to have_content('Whiteboard')
-      expect(page).to have_content('Choose a Standup'.upcase)
-    end
-  end
-
   describe 'Logging Out' do
     before do
       log_in_to_okta('email@blah.com')
@@ -22,10 +8,40 @@ describe 'Authenticating', type: :feature do
       click_on 'Log in with Okta'
     end
 
-    it 'allows you to login and view the dashboard' do
+    it 'allows you to log in and view the dashboard' do
       expect(page).to have_content('Whiteboard')
       click_on 'Log Out'
       expect(page).to have_content('You have been logged out.')
+    end
+  end
+
+  context 'from a non-whitelisted ip' do
+    describe 'Logging In' do
+      before do
+        log_in_to_okta('email@blah.com')
+      end
+
+      it 'allows you to log in and view the dashboard' do
+        visit '/login'
+        expect(page).to have_content('Log in with Okta')
+        click_on 'Log in with Okta'
+        expect(page).to have_content('Whiteboard')
+        expect(page).to have_content('Choose a Standup'.upcase)
+      end
+    end
+  end
+
+  context 'from a whitelisted ip' do
+    describe 'logging in' do
+      before do
+        page.driver.header('X-Forwarded-For', '50.194.143.46')
+      end
+
+      it 'should not force user to authenticate' do
+        visit '/'
+        expect(page).not_to have_content('Log in with Okta')
+        expect(page).to have_content('Choose a Standup'.upcase)
+      end
     end
   end
 end

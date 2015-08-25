@@ -10,5 +10,6 @@ if [[ "$TRAVIS_BRANCH" == "master" ]]; then
   git checkout .
   cf set-env whiteboard-acceptance OKTA_SSO_TARGET_URL $OKTA_SSO_TARGET_URL
   cf set-env whiteboard-acceptance OKTA_CERT_FINGERPRINT $OKTA_CERT_FINGERPRINT
+  cf set-env whiteboard-acceptance IP_WHITELIST $IP_WHITELIST
   bundle exec rake SPACE=whiteboard cf:deploy:staging
 fi
