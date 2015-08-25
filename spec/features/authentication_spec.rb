@@ -8,10 +8,20 @@ describe 'Authenticating', type: :feature do
       click_on 'Log in with Okta'
     end
 
-    it 'allows you to log in and view the dashboard' do
+    it 'allows you to log out' do
       expect(page).to have_content('Whiteboard')
       click_on 'Log Out'
       expect(page).to have_content('You have been logged out.')
+    end
+
+    context 'after logging out' do
+      before do
+        click_on 'Log Out'
+      end
+
+      it 'provides a button to log back in' do
+        expect(page).to have_content('Log in with Okta')
+      end
     end
   end
 
