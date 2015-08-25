@@ -45,8 +45,9 @@ class StandupsController < ApplicationController
   end
 
   def last_or_index
-    if session[:last_visited_standup]
-      redirect_to standup_path(session[:last_visited_standup])
+    last_standup_id = session[:last_visited_standup]
+    if last_standup_id && Standup.find_by(id: last_standup_id)
+      redirect_to standup_path(last_standup_id)
     else
       redirect_to standups_path
     end

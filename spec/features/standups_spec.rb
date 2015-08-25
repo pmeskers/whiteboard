@@ -59,4 +59,14 @@ describe "standups" do
     visit '/'
     expect(page).to have_content('London Whiteboard')
   end
+
+  it 'does not take you to a standup that no longer exists' do
+    london_standup = Standup.last
+    london_standup.id = 1230
+    london_standup.save
+
+    visit '/'
+    expect(page).not_to have_content('London')
+    expect(page).to have_content('Whiteboard')
+  end
 end

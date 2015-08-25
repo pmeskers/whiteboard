@@ -122,11 +122,21 @@ describe StandupsController do
 
     context 'when user has previously visited a standup' do
       it 'redirects to index' do
-        session[:last_visited_standup] = 30
+        session[:last_visited_standup] = standup.id
 
         get :last_or_index
 
-        expect(response).to redirect_to(standup_path(30))
+        expect(response).to redirect_to(standup_path(standup.id))
+      end
+
+      it 'does not redirect to a standup that no longer exists' do
+        session[:last_visited_standup] = 4000
+        standup = Standup.find_by(id: 4000)
+        standup.destroy if standup
+
+        get :last_or_index
+
+        expect(response).to redirect_to(standups_path)
       end
     end
   end
