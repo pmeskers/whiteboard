@@ -1,42 +1,44 @@
-<section class="slide">
-  <h1>
-    Standup<br/>
-    <span><%= @standup.date_today.strftime("%m/%d/%y") %></span>
-    <div class="countdown">
-      <% if @standup.finished_today %>
-        starts NOW!
-      <% else %>
-        <span data-countdown-date="<%= @standup.next_standup_date.to_i * 1000 %>"></span>
-      <% end %>
+<div class="outer">
+  <section class="slide">
+    <h1>
+      Standup<br/>
+      <span><%= @standup.date_today.strftime("%m/%d/%y") %></span>
+
+      <div class="countdown">
+        <% if @standup.finished_today %>
+          starts NOW!
+        <% else %>
+          <span data-countdown-date="<%= @standup.next_standup_date.to_i * 1000 %>"></span>
+        <% end %>
+      </div>
+    </h1>
+
+    <div class='footer'>
+      <p>
+        <%= link_to 'Exit', standup_items_path(@standup), class: 'btn btn-large btn-primary exit-presentation' %>
+      </p>
     </div>
-  </h1>
+  </section>
 
-  <div class='footer'>
-    <p>
-      <%= link_to 'Exit', standup_items_path(@standup), class: 'btn btn-large btn-primary exit-presentation' %>
-    </p>
-  </div>
-</section>
-
-<% Item.kinds.each do |kind| %>
+  <% Item.kinds.each do |kind| %>
     <% next if kind.name == 'Win' && !@items[kind.name].present? %>
     <section class="slide">
       <div class="titles">
         <h2><%= kind.name.pluralize %></h2>
       </div>
       <% if @items[kind.name] %>
-          <% if kind.name == 'Event' || kind.name == 'New face'%>
-              <% @items[kind.name].group_by(&:relative_date).each do |group_name, events| %>
-                  <h3 class="<%= group_name %>"><%= group_name.capitalize %></h3>
-                  <ul>
-                    <%= render partial: 'presentation_item', collection: events %>
-                  </ul>
-              <% end %>
-          <% else %>
-              <ul>
-                <%= render partial: 'presentation_item', collection: @items[kind.name] %>
-              </ul>
+        <% if kind.name == 'Event' || kind.name == 'New face' %>
+          <% @items[kind.name].group_by(&:relative_date).each do |group_name, events| %>
+            <h3 class="<%= group_name %>"><%= group_name.capitalize %></h3>
+            <ul>
+              <%= render partial: 'presentation_item', collection: events %>
+            </ul>
           <% end %>
+        <% else %>
+          <ul>
+            <%= render partial: 'presentation_item', collection: @items[kind.name] %>
+          </ul>
+        <% end %>
       <% end %>
       <div class='footer'>
         <p>
@@ -44,18 +46,19 @@
         </p>
       </div>
     </section>
-<% end %>
-
-<section class="slide">
-  <h1><%= @standup.closing_message %>
-  <% if @standup.image_urls %>
-    <%= image_tag(@standup.closing_image) %>
   <% end %>
-  </h1>
 
-  <div class='footer'>
-    <p>
-      <%= link_to 'Exit', standup_items_path(@standup), class: 'btn btn-large btn-primary exit-presentation' %>
-    </p>
-  </div>
-</section>
+  <section class="slide">
+    <h1><%= @standup.closing_message %>
+      <% if @standup.image_urls %>
+        <%= image_tag(@standup.closing_image) %>
+      <% end %>
+    </h1>
+
+    <div class='footer'>
+      <p>
+        <%= link_to 'Exit', standup_items_path(@standup), class: 'btn btn-large btn-primary exit-presentation' %>
+      </p>
+    </div>
+  </section>
+</div>

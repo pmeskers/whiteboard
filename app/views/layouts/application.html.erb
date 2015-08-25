@@ -15,12 +15,7 @@
   <%= render partial: '/partials/flash' %>
 <% end %>
 
-<% if @boxed %>
-  <div class="outer">
-<% end %>
 <%= yield %>
-<% if @boxed %></div>
-<% end %>
 
 </body>
 </html>

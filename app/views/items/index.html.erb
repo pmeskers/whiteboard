@@ -1,16 +1,18 @@
-<%= render partial: 'as_html', locals: {items: @items} %>
+<div class="outer">
+  <%= render partial: 'as_html', locals: {items: @items} %>
 
-<div class='bottom navbar navbar-fixed-bottom'>
-  <div class='navbar-inner'>
-    <%= link_to 'Presentation', presentation_standup_items_path(@standup), class: 'btn btn-success' %>
-    <%= form_tag "/standups/#{@standup.id}/posts", method: 'post', class: 'navbar-form pull-right' do %>
+  <div class='bottom navbar navbar-fixed-bottom'>
+    <div class='navbar-inner'>
+      <%= link_to 'Presentation', presentation_standup_items_path(@standup), class: 'btn btn-success' %>
+      <%= form_tag "/standups/#{@standup.id}/posts", method: 'post', class: 'navbar-form pull-right' do %>
         <%= text_field_tag 'post[from]', nil, placeholder: 'Blogger Name(s)' %>
         <%= text_field_tag 'post[title]', nil, placeholder: 'Post Title (eg: Best Standup Ever)', class: 'wide-input' %>
         <%= submit_tag 'Create Post',
-                       data: { confirm: 'This will clear the board and create a new one for tomorrow, you can always get back to this post under the "Posts" menu in the header. Continue?' },
-                       id: 'create-post',
-                       class: 'btn btn-warning'
+          data: {confirm: 'This will clear the board and create a new one for tomorrow, you can always get back to this post under the "Posts" menu in the header. Continue?'},
+          id: 'create-post',
+          class: 'btn btn-warning'
         %>
-    <% end %>
+      <% end %>
+    </div>
   </div>
 </div>

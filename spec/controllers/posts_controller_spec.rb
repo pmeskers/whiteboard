@@ -29,11 +29,6 @@ describe PostsController do
       assigns[:post].should == post
       response.should be_ok
     end
-
-    it 'should not box the page contents' do
-      controller.should_not_receive(:boxed)
-      get :edit, id: post.id
-    end
   end
 
   describe "#show" do
@@ -45,11 +40,6 @@ describe PostsController do
       response.should be_ok
       response.body.should include(post.title)
     end
-
-    it 'should not box the page contents' do
-      controller.should_not_receive(:boxed)
-      get :show, id: post.id
-    end
   end
 
   describe "#update" do
@@ -59,11 +49,6 @@ describe PostsController do
       put :update, id: post.id, post: { title: "New Title", from: "Matthew & Matthew" }
       post.reload.title.should == "New Title"
       post.from.should == "Matthew & Matthew"
-    end
-
-    it 'should not box the page contents' do
-      controller.should_not_receive(:boxed)
-      put :update, id: post.id, post: { title: "New Title", from: "Matthew & Matthew" }
     end
   end
 
