@@ -9,14 +9,15 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
  *= require_self
- *= require_tree ./media
  */
 
+@import "bootstrap-sprockets";
 @import "bootstrap";
-@import "bootstrap-responsive";
 @import 'font-awesome';
 @import "compass/css3/box";
 @import 'sass-flex-mixin';
+
+$textColor: black;
 
 body{
   color: #5D5C5C;
@@ -40,7 +41,12 @@ a:hover {
 
   height: 100%;
   width: 100%;
-  margin-top: -18px;
+  margin-top: 50px;
+}
+
+.content-wrapper {
+  padding: 0px 15px;
+  margin: 50px 0px 0px 0px;
 }
 
 .standup {
