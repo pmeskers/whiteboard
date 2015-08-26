@@ -79,6 +79,12 @@ describe StandupsController do
       get :show, id: standup.id
       expect(session[:last_visited_standup]).to eq(standup.id.to_s)
     end
+
+    it 'shows error and redirects to standups#index when standup does not exist' do
+      get :show, id: 12831
+      expect(flash[:error]).to eq('A standup with this ID does not exist.')
+      expect(response).to redirect_to(standups_path)
+    end
   end
 
   describe "#update" do

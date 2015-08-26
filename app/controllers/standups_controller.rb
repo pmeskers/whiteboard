@@ -23,9 +23,14 @@ class StandupsController < ApplicationController
   end
 
   def show
-    @standup = Standup.find(params[:id])
-    session[:last_visited_standup] = params[:id]
-    redirect_to standup_items_path(@standup)
+    @standup = Standup.find_by(id: params[:id])
+    if @standup
+      session[:last_visited_standup] = params[:id]
+      redirect_to standup_items_path(@standup)
+    else
+      flash[:error] = 'A standup with this ID does not exist.'
+      redirect_to standups_path
+    end
   end
 
   def update

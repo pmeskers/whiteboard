@@ -61,6 +61,12 @@ describe "standups", :js do
   end
 
   it 'does not take you to a standup that no longer exists' do
+    visit standup_path(1238)
+
+    expect(page).to have_content('A standup with this ID does not exist.')
+  end
+
+  it 'does not take you to a previously viewed standup that no longer exists' do
     london_standup = Standup.last
     london_standup.id = 1230
     london_standup.save

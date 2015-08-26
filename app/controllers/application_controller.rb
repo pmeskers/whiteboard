@@ -11,7 +11,13 @@ class ApplicationController < ActionController::Base
     ips = ENV['IP_WHITELIST'].split(',')
 
     ips.map do |ip|
-      IPAddr.new(ip)
+      begin
+        addr = IPAddr.new(ip)
+      rescue
+        puts "SKIPPING INVALID IP: #{ip}"
+        next
+      end
+      addr
     end
   end
 end
