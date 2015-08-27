@@ -29,12 +29,12 @@ We use [Papertrail](http://papertrail.com) to save our logs. Documentation for s
 1. Setup
 1. Issues we encountered
 ##### Things you need to configure Okta
-- Ask ticket to askit@pivotal.io to set up Okta Preview and Sandbox. [Here is the information they will need in order to do this.](https://sites.google.com/a/pivotal.io/pivotal-it/pivotal-single-sign-on/request-an-okta-app-integration)
+- Admin access to Okta
 - Single sign on URL: The URL where authentication responses (containing assertions) are returned. This will be something like http://host.com/auth/saml/callback
 - OKTA_SSO_TARGET_URL: The Okta endpoint that accepts authentication requests. This is provided by Okta.
 - OKTA_CERT_FINGERPRINT: A certificate used to validate the signature of the authentication response from Okta. This certificate is provided by Okta, but you will have to fingerprint it.
 ##### Setup
-To set up your Okta app, follow [these instructions](https://sites.google.com/a/pivotal.io/pivotal-it/pivotal-single-sign-on/configuring-new-apps-for-saml-via-okta). __Make sure you do not uncheck the box that says 'Use this for Recipient URL and Destination URL' despite the instructions on this link.__
+To set up your Okta app, follow the instructions in the README.md __Make sure you do not uncheck the box that says 'Use this for Recipient URL and Destination URL' despite the instructions on this link.__
 
 ##### Issues we encountered
 1. You must provide a full filepath to `openssl x509 -noout -fingerprint -in "/full/file/path"`
