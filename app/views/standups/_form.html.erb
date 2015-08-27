@@ -1,64 +1,64 @@
 <%= form_for standup, html: {class: 'form-horizontal'} do |form| %>
     <%= render partial: 'shared/errors',  locals: {model: standup} %>
 
-    <div class='title control-group' style="padding-top: 8px">
-      <%= form.label :title, class: 'control-label' %>
-      <div class="controls">
+    <div class='title form-group' style="padding-top: 8px">
+      <%= form.label :title, class: 'control-label col-sm-2' %>
+      <div class="controls col-sm-10">
         <%= form.text_field :title, :placeholder => 'Title', :size => nil, :class => "wide" %>
       </div>
     </div>
 
-    <div class='subject_prefix control-group'>
-      <%= form.label :subject_prefix, 'Email Subject Prefix', class: 'control-label' %>
-      <div class="controls">
+    <div class='subject_prefix form-group'>
+      <%= form.label :subject_prefix, 'Email Subject Prefix', class: 'control-label col-sm-2' %>
+      <div class="controls col-sm-10">
         <%= form.text_field :subject_prefix, :placeholder => 'Email Subject Prefix', :size => nil, :class => "wide" %>
       </div>
     </div>
 
-    <div class='to_address control-group'>
-      <%= form.label :to_address, 'Send Email To', class: 'control-label' %>
-      <div class="controls">
+    <div class='to_address form-group'>
+      <%= form.label :to_address, 'Send Email To', class: 'control-label col-sm-2' %>
+      <div class="controls col-sm-10">
         <%= form.text_field :to_address, :placeholder => 'Send Email To (address)', :size => nil, :class => "wide" %>
       </div>
     </div>
 
-    <div class='closing_message control-group'>
-      <%= form.label :closing_message, class: 'control-label' %>
-      <div class="controls">
+    <div class='closing_message form-group'>
+      <%= form.label :closing_message, class: 'control-label col-sm-2' %>
+      <div class="controls col-sm-10">
         <%= form.text_field :closing_message, :placeholder => 'Closing Message (optional)', :size => nil, :class => "wide" %>
       </div>
     </div>
 
-    <div class='time_zone control-group'>
-      <%= form.label :time_zone_name, 'Time Zone', class: 'control-label' %>
-      <div class="controls">
+    <div class='time_zone form-group'>
+      <%= form.label :time_zone_name, 'Time Zone', class: 'control-label col-sm-2' %>
+      <div class="controls col-sm-10">
         <%= form.select :time_zone_name, ActiveSupport::TimeZone.all.map(&:name), :class => "wide" %>
       </div>
     </div>
 
-    <div class='start_time_string control-group'>
-      <%= form.label :start_time_string, 'Start Time (ex. 9:06am)', class: 'control-label' %>
-      <div class="controls">
+    <div class='start_time_string form-group'>
+      <%= form.label :start_time_string, 'Start Time (ex. 9:06am)', class: 'control-label col-sm-2' %>
+      <div class="controls col-sm-10">
         <%= form.text_field :start_time_string, :class => "wide" %>
       </div>
     </div>
 
-    <div class='image_urls control-group'>
-      <%= form.label :image_urls, 'Image URLs (newline separated)', class: 'control-label' %>
-      <div class="controls">
+    <div class='image_urls form-group'>
+      <%= form.label :image_urls, 'Image URLs (newline separated)', class: 'control-label col-sm-2' %>
+      <div class="controls col-sm-10">
         <%= form.text_area :image_urls, :class => "input-xxlarge", :rows => 8 %>
       </div>
     </div>
 
-    <div class='image_days control-group'>
-      <%= form.label :image_days, 'Show image on', class: 'control-label' %>
-      <div class="controls">
+    <div class='image_days form-group'>
+      <%= form.label :image_days, 'Show image on', class: 'control-label col-sm-2' %>
+      <div class="controls col-sm-10">
         <%= form.collection_check_boxes(:image_days, [['Mon', 'M'], ['Tue', 'Tu'], ['Wed', 'W'], ['Thu', 'Th'], ['Fri', 'F']], :first, :last) %>
       </div>
     </div>
 
-    <div class='control-group'>
-      <div class="controls">
+    <div class='form-group'>
+      <div class="controls col-sm-10">
         <%= form.submit class: 'btn btn-primary' %>
       </div>
     </div>
