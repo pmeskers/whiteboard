@@ -17,8 +17,8 @@ Features
 - Summarize into posts
 - Two click email sending (the second click is for safety)
 - Two click Posts to Wordpress (untransformed markdown at the moment)
-- Allow authorized IP addresses to access the board without restriction
-- Allow users to sign in with Google Apps SSO if outside authorized IPs
+- Allow authorized IP addresses to access boards without restriction
+- Allows users to sign in using Okta if their IP is not Whitelisted
 
 Usage
 =====
@@ -31,46 +31,96 @@ Whiteboard is a Rails 4 app. It uses rspec with capybara for request specs.  Ple
 Whiteboard [is on Pivotal Tracker](https://www.pivotaltracker.com/projects/560741).
 
 The following environment variables are necessary for posting to a Wordpress blog.
-
-    export WORDPRESS_BLOG_HOST=<blog server>
-    export WORDPRESS_BASIC_AUTH_USER=<user> #optional
-    export WORDPRESS_BASIC_AUTH_PASSWORD=<password> #optional
-    export WORDPRESS_XMLRPC_ENDPOINT_PATH=/wordpress/xmlrpc.php
-    export WORDPRESS_USER=<username>
-    export WORDPRESS_PASSWORD=<password>
-
+```
+export WORDPRESS_BLOG_HOST=<blog server>
+export WORDPRESS_BASIC_AUTH_USER=<user> #optional
+export WORDPRESS_BASIC_AUTH_PASSWORD=<password> #optional
+export WORDPRESS_XMLRPC_ENDPOINT_PATH=/wordpress/xmlrpc.php
+export WORDPRESS_USER=<username>
+export WORDPRESS_PASSWORD=<password>
+```
 The following environment variables are necessary for posting to email via SendGrid.
+```
+export SENDGRID_USERNAME=<username>
+export SENDGRID_PASSWORD=<password>
+```
+Okta needs to be configured for SAML 2.0 before you can set up Okta single sign-on. Check out [Okta's](http://developer.okta.com/docs/guides/setting_up_a_saml_application_in_okta.html) documentation
+for more information.
 
-    export SENDGRID_USERNAME=<username>
-    export SENDGRID_PASSWORD=<password>
-    
-The following environment variables are necessary to integrate with google oauth2.
+1. In the appropriate Okta instance, go to Admin > Applications
+1. Click Add Application
+1. Click Create New App
+    * NOTE: You can clone an existing app integration from the "Apps you created" section  
+1. Choose SAML 2.0
+1. Name the app accordingly:
+    * Development: "App Name - Development" and "App Name - Staging"
+    * Production: "App Name"
+1. Click Next  
+1. Fill out the required fields on the SAML Settings page
+    * Single sign on URL - e.g. https://pivotal-example.cfapps.io/saml/callback
+    * Check the "Use this for Recipient URL and Destination URL" check-box.
+    * Audience URI: e.g. https://pivotal-example.cfapps.io/
+    * Name ID Format: Email Address
+    * Default username: Okta username
+1. Click Advanced Settings
+    * Response: Signed
+    * Assertion: Signed
+    * Authentication context class: PasswordProtectedTransport
+    * Request Compression: Compressed
+1. Click Next
+    * Are you a customer or partner?: I'm an Okta customer adding an internal app
+    * App type: This is an internal app that we have created
+1. Click Save
 
-    export GOOGLE_CLIENT_ID=<client_id>
-    export GOOGLE_CLIENT_SECRET=<client_secret>
-    
-You can find these in the [Google Developers Console](https://console.developers.google.com). See the 
-[OmniAuth Google OAuth2 repo](https://github.com/zquestz/omniauth-google-oauth2) for more details.
+After finish up initial setup, there are two environment variables required by Okta.
 
-To use these environment variables in development mode:
+1. In the appropriate Okta instance, go to Admin > Applications and click on the name of the App.
+1. Click the Sign On tab
+1. Under Settings > Sign On Methods, and click View Setup Instructions.
+1. Copy down the Identity Provider Single Sign-On URL and save the X.509 Certificate.
+1. Export the Identity Provider Single Sign-On URL
 
-    $ foreman run -e .env-development [command] # example: rails s
+    ```
+    export OKTA_SSO_TARGET_URL=<URL from Step 5>
+    ```
+1. Create an Okta signature fingerprint
+    ```
+    openssl x509 -noout -fingerprint -in "/full/file/path"
+    ```
+1. Export the signature output 
+    ```
+    export OKTA_CERT_FINGERPRINT=<signature from step 6>
+    ```
 
-Another option is to use the dotenv gem to setup your environment. Created a .env file in the root of your project. See the .env-example file for setup.
+A string including all the IPs used by your office is required as an environment variable in order for IP fencing to work.
+The format should be a single string of IPs, e.g.
+`192.168.0.1`,
+or IP ranges in slash notation, e.g.
+`64.168.236.220/24`,
+separated by a single comma like so: 
+```
+192.168.1.1,127.0.0.1,10.10.10.10,33.33.33.33/24
+```
+Export this string:
+```
+export IP_WHITELIST=<ip_string>
+```
 
 Testing
 =======
+Before running tests, make sure to add your local IP to the IP_WHITELIST environment variable string. Then run
+
+```
 bundle exec rspec
+```
 
 # How to Deploy to Cloud Foundry
 
 ##First Time Deployment Setup
 
-See Kevin Olsen for credentials.
-
     cf target --url https://api.run.pivotal.io
     cf login
-    cf target -s whiteboard
+    cf target -s whiteboard -o <organization>
 
 	cf push --no-start --reset
 	cf set-env whiteboard-production WORDPRESS_USER username
@@ -84,7 +134,7 @@ See Kevin Olsen for credentials.
     cf set-env whiteboard-acceptance WORDPRESS_BASIC_AUTH_USER <user>
     cf set-env whiteboard-acceptance WORDPRESS_BASIC_AUTH_PASSWORD <password>
     cf set-env whiteboard-acceptance WORDPRESS_XMLRPC_ENDPOINT_PATH /wordpress/xmlrpc.php
-    cf set-env whiteboard-acceptance EXCEPTIONAL_API_KEY <you exceptional API key>
+    cf set-env whiteboard-acceptance EXCEPTIONAL_API_KEY <your exceptional API key>
 	cf env   # check all settings
 	# migrate data
 	cf push --reset  # push env settings and start app
