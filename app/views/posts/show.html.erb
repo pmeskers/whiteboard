@@ -5,7 +5,7 @@
   <% if items[kindName] %>
     <h2><%= kindName.pluralize %></h2>
     <ul>
-      <% items[kindName].each do |item| %>
+        <% items[kindName].each do |item| %>
         <li><%=  item.title %></li>
         <% if item.description.present? %>
           <pre><%=  item.description %></pre>

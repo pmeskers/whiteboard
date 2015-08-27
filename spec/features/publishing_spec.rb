@@ -23,12 +23,12 @@ describe "publishing", js: true do
     page.should have_content("Please update these items with any new information from standup:")
 
     page.should have_css('p[disabled="disabled"]', text: 'Send Email')
-    within('div.well', text: 'Please double check this email for accuracy.') do
+    within('#publish', text: 'Please double check this email for accuracy.') do
       page.should have_content("There is no content to publish")
     end
 
     page.should have_css('p[disabled="disabled"]', text: 'Post Blog Entry')
-    within('div.well', text: 'Please double check the blog post.') do
+    within('#publish', text: 'Please double check the blog post.') do
       page.should have_content("There is no content to publish")
     end
 

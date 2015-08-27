@@ -87,7 +87,7 @@ describe "items", js: true do
     visit '/'
     click_link(standup.title)
 
-    within '.kind.event' do
+    within '.event' do
       page.should have_css('.subheader.today', text: 'Today')
       page.should have_css('.today + .item', text: 'Happy Hour')
       page.should have_css('.subheader.tomorrow', text: 'Tomorrow')
@@ -96,14 +96,14 @@ describe "items", js: true do
       page.should have_css('.upcoming + .item', text: 'Party')
     end
 
-    within '.kind.new_face' do
+    within '.new_face' do
       page.should have_css('.subheader.today', text: 'Today')
       page.should have_css('.today + .item', text: 'Johnathon McKenzie')
       page.should have_css('.subheader.upcoming', text: 'Upcoming')
       page.should have_css('.upcoming + .item', text: 'Jane Doe')
     end
 
-    within '.kind.interesting' do
+    within '.interesting' do
       page.should have_css('.item', text: 'Linus Torvalds')
       first('a[data-toggle]').click
       page.should have_selector('.in')
@@ -111,7 +111,7 @@ describe "items", js: true do
       page.should have_link('www.links.com')
     end
 
-    within '.kind.win' do
+    within '.win' do
       page.should have_css('.item', text: 'Tracker iOS 7 app')
     end
 

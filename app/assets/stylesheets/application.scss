@@ -112,7 +112,6 @@ a:hover {
   @include flexbox;
   @include flex-direction(column);
   position: relative;
-  font-size: 1rem;
   line-height: 1.2rem;
 
   .author {

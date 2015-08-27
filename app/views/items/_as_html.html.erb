@@ -1,5 +1,8 @@
 <% Item.kinds.each_with_index do |kind, index| %>
-  <div class="kind <%= kind.name.downcase.tr(' ', '_') %> <%= index%2==0 ? 'left-column' : 'right-column' %>">
+  <% if index % 2 == 0%>
+    <div class="row">
+  <% end %>
+  <div class="<%= kind.name.downcase.tr(' ', '_') %> col-md-6 col-xs-12">
     <div class="block header">
       <h2 class="title"><%= kind.name.pluralize %></h2>
       <%= link_to new_standup_item_path(@standup, post_id: @post.try(:id), 'item[kind]' => kind.name), 'data-kind' => kind.name do %>
@@ -20,4 +23,7 @@
       <% end %>
     <% end %>
   </div>
+  <% if index % 2 == 1 %>
+    </div>
+  <% end %>
 <% end %>
