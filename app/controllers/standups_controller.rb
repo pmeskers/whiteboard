@@ -28,7 +28,7 @@ class StandupsController < ApplicationController
       session[:last_visited_standup] = params[:id]
       redirect_to standup_items_path(@standup)
     else
-      flash[:error] = 'A standup with this ID does not exist.'
+      flash[:error] = "A standup with the ID #{params[:id]} does not exist."
       redirect_to standups_path
     end
   end

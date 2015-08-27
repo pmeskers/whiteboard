@@ -64,7 +64,7 @@ describe "publishing", js: true do
 
     click_on 'Post Blog Entry'
 
-    within '.alert.alert-error' do
+    within '.alert.alert-danger' do
       page.should have_content('Wrong size. Was 180, should be 131')
     end
 

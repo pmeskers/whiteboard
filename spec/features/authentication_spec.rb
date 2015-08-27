@@ -45,6 +45,7 @@ describe 'Authenticating', type: :feature do
     describe 'logging in' do
       before do
         page.driver.header('X-Forwarded-For', '50.194.143.46')
+        ENV['IP_WHITELIST'] = '50.194.143.46'
       end
 
       it 'should not force user to authenticate' do

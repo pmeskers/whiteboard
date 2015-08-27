@@ -82,7 +82,7 @@ describe StandupsController do
 
     it 'shows error and redirects to standups#index when standup does not exist' do
       get :show, id: 12831
-      expect(flash[:error]).to eq('A standup with this ID does not exist.')
+      expect(flash[:error]).to eq('A standup with the ID 12831 does not exist.')
       expect(response).to redirect_to(standups_path)
     end
   end
