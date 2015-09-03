@@ -216,6 +216,7 @@ describe "items", js: true do
       it "locks to the bottom of the screen but unlocks whenever the width goes below 737px" do
         page.driver.resize_window 737, 2000
 
+        login
         visit '/'
         click_link(standup.title)
 
@@ -231,6 +232,7 @@ describe "items", js: true do
       it "is unlocked from the bottom of the screen but locks whenever the width goes above 737px" do
         page.driver.resize_window 736, 2000
 
+        login
         visit '/'
         click_link(standup.title)
 
