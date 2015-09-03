@@ -15,17 +15,4 @@
       <% end %>
     </div>
   </div>
-  <script>
-      var unlockNavbarIfNecessary = function() {
-          if ($(window).width() >= 500) {
-              $('div.bottom').addClass('navbar-fixed-bottom');
-          } else {
-              $('div.bottom').removeClass('navbar-fixed-bottom')
-          }
-      };
-      unlockNavbarIfNecessary();
-      $(window).resize(function() {
-          unlockNavbarIfNecessary();
-      });
-  </script>
 </div>

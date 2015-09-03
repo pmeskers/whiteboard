@@ -211,18 +211,35 @@ describe "items", js: true do
     end
   end
 
-  context "the bottom navbar" do
-    it "dynamically locks to the bottom of the screen when the screen width is greater than 500px, and unlocks when it is below 500px" do
-      page.driver.resize_window 500, 2000
+  describe "the bottom navbar" do
+    context "when the screen width starts at or above 737px" do
+      it "locks to the bottom of the screen but unlocks whenever the width goes below 737px" do
+        page.driver.resize_window 737, 2000
 
-      visit '/'
-      click_link(standup.title)
+        visit '/'
+        click_link(standup.title)
 
-      page.find('div.content-wrapper').should have_css('.navbar-fixed-bottom')
-      page.driver.resize_window 499, 2000
-      page.find('div.content-wrapper').should_not have_css('.navbar-fixed-bottom')
-      page.driver.resize_window 500, 2000
-      page.find('div.content-wrapper').should have_css('.navbar-fixed-bottom')
+        page.find('div.content-wrapper').should have_css('.navbar-fixed-bottom')
+        page.driver.resize_window 736, 2000
+        page.find('div.content-wrapper').should_not have_css('.navbar-fixed-bottom')
+        page.driver.resize_window 737, 2000
+        page.find('div.content-wrapper').should have_css('.navbar-fixed-bottom')
+      end
+    end
+
+    context "when the screen width starts below 737px" do
+      it "is unlocked from the bottom of the screen but locks whenever the width goes above 737px" do
+        page.driver.resize_window 736, 2000
+
+        visit '/'
+        click_link(standup.title)
+
+        page.find('div.content-wrapper').should_not have_css('.navbar-fixed-bottom')
+        page.driver.resize_window 737, 2000
+        page.find('div.content-wrapper').should have_css('.navbar-fixed-bottom')
+        page.driver.resize_window 736, 2000
+        page.find('div.content-wrapper').should_not have_css('.navbar-fixed-bottom')
+      end
     end
   end
 end
