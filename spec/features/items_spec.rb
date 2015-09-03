@@ -210,6 +210,21 @@ describe "items", js: true do
       page.should have_content "Woohoo"
     end
   end
+
+  context "the bottom navbar" do
+    it "dynamically locks to the bottom of the screen when the screen width is greater than 500px, and unlocks when it is below 500px" do
+      page.driver.resize_window 500, 2000
+
+      visit '/'
+      click_link(standup.title)
+
+      page.find('div.content-wrapper').should have_css('.navbar-fixed-bottom')
+      page.driver.resize_window 499, 2000
+      page.find('div.content-wrapper').should_not have_css('.navbar-fixed-bottom')
+      page.driver.resize_window 500, 2000
+      page.find('div.content-wrapper').should have_css('.navbar-fixed-bottom')
+    end
+  end
 end
 
 def fill_date_selector_with(date)
