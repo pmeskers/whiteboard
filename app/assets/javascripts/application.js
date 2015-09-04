@@ -50,20 +50,3 @@ jQuery(function($) {
   });
 
 });
-
-var unlockNavbarIfNecessary = function() {
-    var iphone6PlusLandscapeWidth = 736;
-    var bottomNavbar = $('div.bottom');
-    if ($(window).width() > iphone6PlusLandscapeWidth) {
-        bottomNavbar.addClass('navbar-fixed-bottom');
-    } else {
-        bottomNavbar.removeClass('navbar-fixed-bottom')
-    }
-};
-
-$(document).ready(function () {
-    unlockNavbarIfNecessary();
-    $(window).resize(function () {
-        unlockNavbarIfNecessary();
-    });
-});
