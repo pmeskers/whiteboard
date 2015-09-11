@@ -105,6 +105,8 @@ Export this string:
 ```
 export IP_WHITELIST=<ip_string>
 ```
+Whiteboard is setup by default to whitelist 127.0.0.1 (localhost) by default to allow the tests to pass. This is located
+in the .env.test file.
 
 Testing
 =======
