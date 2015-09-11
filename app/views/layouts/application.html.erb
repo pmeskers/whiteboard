@@ -9,13 +9,11 @@
   <link rel="apple-touch-icon-precomposed" href="<%= asset_path 'whiteboard-icon.png' %>">
 </head>
 <body>
-
 <%= render partial: '/partials/nav' %>
 <% if flash %>
-  <%= render partial: '/partials/flash' %>
+    <%= render partial: '/partials/flash' %>
 <% end %>
 
 <%= yield %>
-
 </body>
 </html>
