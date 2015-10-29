@@ -7,7 +7,7 @@ describe "publishing", js: true do
     login
     visit '/'
 
-    WordpressService.any_instance.stub(:minimally_configured?).and_return(true)
+    allow_any_instance_of(WordpressService).to receive(:minimally_configured?).and_return(true)
   end
 
   it "does not allow publishing to blog and email when no public content" do

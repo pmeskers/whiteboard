@@ -120,14 +120,14 @@ describe PostsController do
   describe "#post_to_blog" do
     before do
       @fakeWordpress = double("wordpress service", :"minimally_configured?" => true)
-      Rails.application.config.stub(:blogging_service) { @fakeWordpress }
+      allow(Rails.application.config).to receive(:blogging_service) { @fakeWordpress }
 
       @item = create(:item, public: true)
       @post = create(:post, items: [@item])
     end
 
     it "sets the post data on the blog post object" do
-      @fakeWordpress.stub(:send!)
+      allow(@fakeWordpress).to receive(:send!)
       blog_post = OpenStruct.new
       expect(BlogPost).to receive(:new).and_return(blog_post)
 
@@ -146,7 +146,7 @@ describe PostsController do
     end
 
     it "marks it as posted" do
-      @fakeWordpress.stub(:send!)
+      allow(@fakeWordpress).to receive(:send!)
 
       put :post_to_blog, id: @post.id
 
@@ -154,7 +154,7 @@ describe PostsController do
     end
 
     it "records the published post id" do
-      @fakeWordpress.stub(:send!).and_return("1234")
+      allow(@fakeWordpress).to receive(:send!).and_return("1234")
 
       put :post_to_blog, id: @post.id
 

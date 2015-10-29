@@ -173,8 +173,8 @@ describe Item do
 
     let(:standup) do
       standup = Standup.new
-      standup.stub(:date_today).and_return(today)
-      standup.stub(:date_tomorrow).and_return(tomorrow)
+      allow(standup).to receive(:date_today).and_return(today)
+      allow(standup).to receive(:date_tomorrow).and_return(tomorrow)
       standup
     end
 

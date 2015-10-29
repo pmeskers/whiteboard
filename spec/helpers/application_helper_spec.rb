@@ -84,7 +84,7 @@ describe ApplicationHelper do
 
         describe "when the date is in the future" do
           before do
-            Date.stub(today: Date.new(2012, 11, 05))
+            allow(Date).to receive(:today).and_return(Date.new(2012, 11, 05))
             item.date = Date.new(2012, 11, 07)
           end
 
@@ -96,7 +96,7 @@ describe ApplicationHelper do
 
         describe "when the date is more than a week away" do
           before do
-            Date.stub(today: Date.new(2012, 11, 04))
+            allow(Date).to receive(:today).and_return(Date.new(2012, 11, 04))
             item.date = Date.new(2012, 11, 22)
           end
 
@@ -111,12 +111,12 @@ describe ApplicationHelper do
 
   describe "#wordpress_enabled?" do
     it "returns true if the app's blogging service is minimally configured" do
-      Rails.application.config.blogging_service.stub(:minimally_configured?).and_return(true)
+      allow(Rails.application.config.blogging_service).to receive(:minimally_configured?).and_return(true)
       expect(helper.wordpress_enabled?).to eq true
     end
 
     it "returns false otherwise" do
-      Rails.application.config.blogging_service.stub(:minimally_configured?).and_return(false)
+      allow(Rails.application.config.blogging_service).to receive(:minimally_configured?).and_return(false)
       expect(helper.wordpress_enabled?).to eq false
     end
   end
