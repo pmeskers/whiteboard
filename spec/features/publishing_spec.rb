@@ -11,7 +11,7 @@ describe "publishing", js: true do
   end
 
   it "does not allow publishing to blog and email when no public content" do
-    WordpressService.any_instance.should_not_receive(:send!)
+    expect_any_instance_of(WordpressService).to_not receive(:send!)
     click_link(standup.title)
 
     fill_in "Blogger Name(s)", with: "Me"

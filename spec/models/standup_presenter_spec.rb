@@ -12,7 +12,7 @@ describe StandupPresenter do
   context 'when standup object does not have a closing message' do
     it 'picks a closing message' do
       Date.stub_chain(:today, :wday).and_return(4)
-      StandupPresenter::STANDUP_CLOSINGS.should include(subject.closing_message)
+expect(StandupPresenter::STANDUP_CLOSINGS).to include(subject.closing_message)
     end
 
     it 'should remind us when its Floor Friday' do
@@ -46,7 +46,7 @@ describe StandupPresenter do
 
       context 'when the directory contains files' do
         it 'returns an image url from the list of image urls' do
-          image_urls.should include subject.closing_image
+expect(image_urls).to include subject.closing_image
         end
 
         it 'does not return the same image 100 times in a row' do

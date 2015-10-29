@@ -33,7 +33,7 @@ describe ItemsController do
           params[:item][:post_id] =  standup_post.to_param
         end)
       }.to change { standup_post.items.count }.by(1)
-      response.should redirect_to(edit_post_path(standup_post))
+      expect(response).to redirect_to(edit_post_path(standup_post))
     end
   end
 
@@ -70,8 +70,8 @@ describe ItemsController do
       interesting = create(:item, kind: "Interesting", standup: standup)
 
       get :index, params
-      assigns[:items]['New face'].should    == [ new_face ]
-      assigns[:items]['Help'].should        == [ help ]
+      expect(assigns[:items]['New face']).to eq [ new_face ]
+      expect(assigns[:items]['Help']).to eq [ help ]
       expect(assigns[:items]['Interesting']).to eq [ interesting ]
       expect(response).to be_ok
     end
@@ -92,8 +92,8 @@ describe ItemsController do
       posted_item = create(:item, post: post, standup: standup)
 
       get :index, params
-      assigns[:items]['New face'].should    == [ new_face ]
-      assigns[:items]['Help'].should        == [ help ]
+      expect(assigns[:items]['New face']).to eq [ new_face ]
+      expect(assigns[:items]['Help']).to eq [ help ]
       expect(assigns[:items]['Interesting']).to eq [ interesting ]
       expect(response).to be_ok
     end
@@ -105,8 +105,8 @@ describe ItemsController do
 
       get :index, params
 
-      assigns[:items]['Event'].should include standup_event
-      assigns[:items]['Event'].should_not include other_standup_event
+      expect(assigns[:items]['Event']).to include standup_event
+      expect(assigns[:items]['Event']).to_not include other_standup_event
     end
   end
 
@@ -128,8 +128,8 @@ describe ItemsController do
 
       get :presentation, params
 
-      assigns[:items]['Event'].should include standup_event
-      assigns[:items]['Event'].should_not include other_standup_event
+      expect(assigns[:items]['Event']).to include standup_event
+      expect(assigns[:items]['Event']).to_not include other_standup_event
     end
   end
 
@@ -139,9 +139,9 @@ describe ItemsController do
 
       item = create(:item)
       delete :destroy, id: item.id
-      Item.find_by_id(item.id).should_not be
+      expect(Item.find_by_id(item.id)).to_not be
 
-      response.should redirect_to "the url we came from"
+      expect(response).to redirect_to "the url we came from"
     end
   end
 
@@ -172,7 +172,7 @@ describe ItemsController do
 
       it "redirects to the edit post page" do
         put :update, id: item.id, post_id: item.post, item: { title: "New Title" }, redirect_to: '/foo'
-        response.should redirect_to('/foo')
+        expect(response).to redirect_to('/foo')
       end
     end
 
@@ -181,7 +181,7 @@ describe ItemsController do
 
       it "redirects to the standup page" do
         put :update, id: item.id, post_id: item.post, item: { title: "New Title" }
-        response.should redirect_to(item.standup)
+        expect(response).to redirect_to(item.standup)
       end
     end
 

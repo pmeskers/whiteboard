@@ -72,7 +72,7 @@ describe StandupsController do
   describe "#show" do
     it "redirects to the items page of the standup" do
       get :show, id: standup.id
-      response.body.should redirect_to standup_items_path(standup)
+expect(response.body).to redirect_to standup_items_path(standup)
     end
 
     it 'saves standup id to cookie' do
@@ -111,7 +111,7 @@ describe StandupsController do
       expect {
         post :destroy, id: standup.id
       }.to change(Standup, :count).by(-1)
-      response.should redirect_to standups_path
+      expect(response).to redirect_to standups_path
     end
   end
 

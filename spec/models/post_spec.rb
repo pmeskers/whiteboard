@@ -2,15 +2,15 @@ require 'rails_helper'
 
 describe Post do
   describe 'associations' do
-    it { should belong_to(:standup) }
+    it { is_expected.to belong_to(:standup) }
 
-    it { should have_many(:items) }
-    it { should have_many(:public_items) }
+    it { is_expected.to have_many(:items) }
+    it { is_expected.to have_many(:public_items) }
   end
 
   describe "validations" do
-    it { should validate_presence_of(:standup) }
-    it { should validate_presence_of(:title) }
+    it { is_expected.to validate_presence_of(:standup) }
+    it { is_expected.to validate_presence_of(:title) }
   end
 
   describe "#adopt_all_items" do

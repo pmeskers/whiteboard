@@ -33,18 +33,18 @@ describe ApplicationHelper do
 
     context "the item is an event" do
       let(:item) { Item.new(kind: "Interesting", title: "Not Interesting", date: Date.tomorrow) }
-      it { should == "#{item.date.strftime("%A(%m/%d)")}: #{item.title}" }
+      it { is_expected.to eq "#{item.date.strftime("%A(%m/%d)")}: #{item.title}" }
     end
 
     context "the item is not an event" do
       context "the item does not have a date" do
         let(:item) { Item.new(kind: "Interesting", title: "Not Interesting") }
-        it { should == item.title }
+        it { is_expected.to eq item.title }
       end
 
       context "the item does have a date" do
         let(:item) { Item.new(kind: "Interesting", title: "Not Interesting", date: Date.tomorrow) }
-        it { should == "#{item.date.strftime("%A(%m/%d)")}: #{item.title}" }
+        it { is_expected.to eq "#{item.date.strftime("%A(%m/%d)")}: #{item.title}" }
       end
     end
   end

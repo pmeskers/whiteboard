@@ -131,7 +131,7 @@ describe "items", js: true do
     end
     page.execute_script("$.deck('next')")
 
-    find('section.deck-current').should have_content "Helps"
+    expect(find('section.deck-current')).to have_content "Helps"
     page.execute_script("$.deck('next')")
 
     within 'section.deck-current' do
@@ -148,21 +148,21 @@ describe "items", js: true do
     end
     page.execute_script("$.deck('next')")
 
-    find('section.deck-current').should have_content "Events"
+    expect(find('section.deck-current')).to have_content "Events"
     expect(page).to have_css('section.deck-current', text: 'Today')
     expect(page).to have_css('.today + ul li', text: 'Happy Hour')
     expect(page).to have_css('section.deck-current', text: 'Tomorrow')
     expect(page).to have_css('.tomorrow + ul li', text: 'Baseball')
     expect(page).to have_css('section.deck-current', text: 'Upcoming')
     expect(page).to have_css('.upcoming + ul li', text: 'Party')
-    find('section.deck-current').should_not have_content "Meetup"
-    find('section.deck-current').should_not have_content("Rails 62 is out")
+    expect(find('section.deck-current')).to_not have_content "Meetup"
+    expect(find('section.deck-current')).to_not have_content("Rails 62 is out")
     page.execute_script("$.deck('next')")
 
-    find('section.deck-current').should have_content "Wins"
+    expect(find('section.deck-current')).to have_content "Wins"
     expect(page).to have_css('section.deck-current', text: 'Tracker iOS 7 app')
-    find('section.deck-current').should_not have_content 'Happy Hour'
-    find('section.deck-current').should_not have_content 'Baseball'
+    expect(find('section.deck-current')).to_not have_content 'Happy Hour'
+    expect(find('section.deck-current')).to_not have_content 'Baseball'
     page.execute_script("$.deck('next')")
 
     within 'section.deck-current' do
@@ -196,13 +196,13 @@ describe "items", js: true do
     end
     page.execute_script("$.deck('next')")
 
-    find('section.deck-current').should have_content "New faces"
+    expect(find('section.deck-current')).to have_content "New faces"
     page.execute_script("$.deck('next')")
-    find('section.deck-current').should have_content "Helps"
+    expect(find('section.deck-current')).to have_content "Helps"
     page.execute_script("$.deck('next')")
-    find('section.deck-current').should have_content "Interestings"
+    expect(find('section.deck-current')).to have_content "Interestings"
     page.execute_script("$.deck('next')")
-    find('section.deck-current').should have_content "Events"
+    expect(find('section.deck-current')).to have_content "Events"
     page.execute_script("$.deck('next')")
 
     within 'section.deck-current' do
@@ -220,11 +220,11 @@ describe "items", js: true do
         visit '/'
         click_link(standup.title)
 
-        page.find('div.content-wrapper').should have_css('.navbar-fixed-bottom')
+        expect(page.find('div.content-wrapper')).to have_css('.navbar-fixed-bottom')
         page.current_window.resize_to 736, 2000
-        page.find('div.content-wrapper').should_not have_css('.navbar-fixed-bottom')
+        expect(page.find('div.content-wrapper')).to_not have_css('.navbar-fixed-bottom')
         page.current_window.resize_to 737, 2000
-        page.find('div.content-wrapper').should have_css('.navbar-fixed-bottom')
+        expect(page.find('div.content-wrapper')).to have_css('.navbar-fixed-bottom')
       end
     end
 
@@ -236,11 +236,11 @@ describe "items", js: true do
         visit '/'
         click_link(standup.title)
 
-        page.find('div.content-wrapper').should_not have_css('.navbar-fixed-bottom')
+        expect(page.find('div.content-wrapper')).to_not have_css('.navbar-fixed-bottom')
         page.current_window.resize_to 737, 2000
-        page.find('div.content-wrapper').should have_css('.navbar-fixed-bottom')
+        expect(page.find('div.content-wrapper')).to have_css('.navbar-fixed-bottom')
         page.current_window.resize_to 736, 2000
-        page.find('div.content-wrapper').should_not have_css('.navbar-fixed-bottom')
+        expect(page.find('div.content-wrapper')).to_not have_css('.navbar-fixed-bottom')
       end
     end
   end

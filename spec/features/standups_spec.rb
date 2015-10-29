@@ -6,7 +6,7 @@ describe "standups", :js do
     visit '/'
     FactoryGirl.create(:standup)
 
-    find('h2').should have_content 'CHOOSE A STANDUP'
+    expect(find('h2')).to have_content 'CHOOSE A STANDUP'
     click_link('New Standup')
 
     fill_in 'standup_title', with: "London"
@@ -26,7 +26,7 @@ describe "standups", :js do
   it "creates new standups", js: true do
     current_page = current_url
     expect(current_page).to match(/http:\/\/127\.0\.0\.1:\d*\/standups\/\d*/)
-    find('.navbar-fixed-top').should have_content 'London Whiteboard'
+    expect(find('.navbar-fixed-top')).to have_content 'London Whiteboard'
 
     page.find('a.btn.btn-navbar').click if page.has_css?('.btn.btn-navbar')
     page.find('a.posts', text: 'Posts').click
@@ -48,7 +48,7 @@ describe "standups", :js do
     click_on_preferences(page)
     click_on 'Delete Standup'
 
-    current_url.should match(/http:\/\/127\.0\.0\.1:\d*\/standups$/)
+expect(current_url).to match(/http:\/\/127\.0\.0\.1:\d*\/standups$/)
     expect(page).to_not have_content 'London Whiteboard'
   end
 

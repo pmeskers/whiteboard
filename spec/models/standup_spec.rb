@@ -2,13 +2,13 @@ require 'rails_helper'
 
 describe Standup do
   describe 'associations' do
-    it { should have_many(:items).dependent(:destroy) }
-    it { should have_many(:posts).dependent(:destroy) }
+    it { is_expected.to have_many(:items).dependent(:destroy) }
+    it { is_expected.to have_many(:posts).dependent(:destroy) }
   end
 
   describe 'validations' do
-    it { should validate_presence_of(:title) }
-    it { should validate_presence_of(:to_address) }
+    it { is_expected.to validate_presence_of(:title) }
+    it { is_expected.to validate_presence_of(:to_address) }
 
     it "should validate the format of the standup time" do
       standup = FactoryGirl.build(:standup)
@@ -21,10 +21,10 @@ describe Standup do
       expect(standup).to be_valid
 
       standup.start_time_string = "10:00"
-      standup.should_not be_valid
+      expect(standup).to_not be_valid
 
       standup.start_time_string = "23:00"
-      standup.should_not be_valid
+      expect(standup).to_not be_valid
     end
   end
 
