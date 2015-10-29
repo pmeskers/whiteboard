@@ -9,9 +9,9 @@ describe WordpressService do
 
     it "calls the connection with the attributes for the post" do
       connection = double("mock_connection")
-      subject.should_receive(:connection).and_return(connection)
+      expect(subject).to receive(:connection).and_return(connection)
 
-      connection.should_receive(:call).with(
+      expect(connection).to receive(:call).with(
         'metaWeblog.newPost',
         1,
         "user",

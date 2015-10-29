@@ -45,7 +45,7 @@ describe "publishing", js: true do
   end
 
   it "allows reposting if error returned from wordpress" , js: true do
-    WordpressService.any_instance.should_receive(:send!).and_raise(XMLRPC::FaultException.new(123, "Wrong size. Was 180, should be 131"))
+    expect_any_instance_of(WordpressService).to receive(:send!).and_raise(XMLRPC::FaultException.new(123, "Wrong size. Was 180, should be 131"))
     click_link(standup.title)
 
 
@@ -73,7 +73,7 @@ describe "publishing", js: true do
   end
 
   it "shows the URL the post was published to" , js: true do
-    WordpressService.any_instance.should_receive(:send!).and_return("best-post-eva")
+    expect_any_instance_of(WordpressService).to receive(:send!).and_return("best-post-eva")
     click_link(standup.title)
 
 

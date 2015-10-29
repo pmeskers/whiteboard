@@ -129,7 +129,7 @@ describe PostsController do
     it "sets the post data on the blog post object" do
       @fakeWordpress.stub(:send!)
       blog_post = OpenStruct.new
-      BlogPost.should_receive(:new).and_return(blog_post)
+      expect(BlogPost).to receive(:new).and_return(blog_post)
 
       put :post_to_blog, id: @post.id
 
@@ -138,7 +138,7 @@ describe PostsController do
     end
 
     it "posts to wordpress" do
-      @fakeWordpress.should_receive(:send!)
+      expect(@fakeWordpress).to receive(:send!)
 
       put :post_to_blog, id: @post.id
 
@@ -174,7 +174,7 @@ describe PostsController do
     context 'unsuccessful post' do
 
       before do
-        @fakeWordpress.should_receive(:send!).and_raise(XMLRPC::FaultException.new(123, "Wrong size. Was 180, should be 131"))
+        expect(@fakeWordpress).to receive(:send!).and_raise(XMLRPC::FaultException.new(123, "Wrong size. Was 180, should be 131"))
         put :post_to_blog, id: @post.id
       end
 

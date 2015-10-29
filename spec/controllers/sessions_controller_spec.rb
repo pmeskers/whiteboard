@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe SessionsController do
   describe '#create' do
-    before { ActionController::Base.any_instance.should_receive(:verify_authenticity_token).never }
+    before { expect_any_instance_of(ActionController::Base).to receive(:verify_authenticity_token).never }
 
     it "sets the session['logged_in'] to true" do
       request.env['omniauth.auth'] = { 'info' => { 'name' => 'Kocher' } }
