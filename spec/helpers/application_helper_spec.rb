@@ -55,7 +55,7 @@ describe ApplicationHelper do
 
       it "returns nothing" do
         label = helper.date_label(item)
-        label.should be_blank
+        expect(label).to be_blank
       end
     end
 
@@ -78,7 +78,7 @@ describe ApplicationHelper do
 
           it "returns nothing" do
             label = helper.date_label(item)
-            label.should be_blank
+            expect(label).to be_blank
           end
         end
 

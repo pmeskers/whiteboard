@@ -12,13 +12,13 @@ describe Standup do
 
     it "should validate the format of the standup time" do
       standup = FactoryGirl.build(:standup)
-      standup.should be_valid
+      expect(standup).to be_valid
 
       standup.start_time_string = "9:00 am"
-      standup.should be_valid
+      expect(standup).to be_valid
 
       standup.start_time_string = "09:10 AM"
-      standup.should be_valid
+      expect(standup).to be_valid
 
       standup.start_time_string = "10:00"
       standup.should_not be_valid

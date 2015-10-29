@@ -13,7 +13,7 @@ describe StandupsController do
         expect do
           post :create, standup: {title: "Berlin", to_address: "berlin+standup@pivotallabs.com"}
         end.to change { Standup.count }.by(1)
-        response.should be_redirect
+        expect(response).to be_redirect
       end
     end
 
@@ -30,7 +30,7 @@ describe StandupsController do
   describe "#new" do
     it "renders the new standups template" do
       get :new
-      response.should be_ok
+      expect(response).to be_ok
       response.should render_template 'standups/new'
     end
   end
@@ -43,7 +43,7 @@ describe StandupsController do
 
         get :index
 
-        response.should be_ok
+        expect(response).to be_ok
         expect(assigns[:standups]).to include(standup1, standup2)
       end
     end
@@ -56,7 +56,7 @@ describe StandupsController do
 
       get :index
 
-      response.should be_ok
+      expect(response).to be_ok
       expect(assigns[:standups]).to eq [first, second, third, fourth]
     end
   end
@@ -65,7 +65,7 @@ describe StandupsController do
     it "shows the post for editing" do
       get :edit, id: standup.id
       expect(assigns[:standup]).to eq standup
-      response.should be_ok
+      expect(response).to be_ok
     end
   end
 

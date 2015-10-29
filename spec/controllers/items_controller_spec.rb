@@ -40,9 +40,9 @@ describe ItemsController do
   describe '#new' do
     it "should create a new Item object" do
       get :new, params
-      assigns[:item].should be_new_record
+      expect(assigns[:item]).to be_new_record
       response.should render_template('items/new')
-      response.should be_ok
+      expect(response).to be_ok
     end
 
     it "should render the custom template for the kind if there is one" do
@@ -73,7 +73,7 @@ describe ItemsController do
       assigns[:items]['New face'].should    == [ new_face ]
       assigns[:items]['Help'].should        == [ help ]
       expect(assigns[:items]['Interesting']).to eq [ interesting ]
-      response.should be_ok
+      expect(response).to be_ok
     end
 
     it "sorts the hash by date asc" do
@@ -95,7 +95,7 @@ describe ItemsController do
       assigns[:items]['New face'].should    == [ new_face ]
       assigns[:items]['Help'].should        == [ help ]
       expect(assigns[:items]['Interesting']).to eq [ interesting ]
-      response.should be_ok
+      expect(response).to be_ok
     end
 
     it "does not include items associated with other standups" do
@@ -118,7 +118,7 @@ describe ItemsController do
 
     it "loads the posts" do
       get :presentation, params
-      assigns[:items].should be
+      expect(assigns[:items]).to be
     end
 
     it "only loads items from the current standup" do

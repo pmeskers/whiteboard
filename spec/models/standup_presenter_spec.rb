@@ -70,7 +70,7 @@ describe StandupPresenter do
       end
 
       it 'returns nil' do
-        subject.closing_image.should be_nil
+        expect(subject.closing_image).to be_nil
       end
     end
   end

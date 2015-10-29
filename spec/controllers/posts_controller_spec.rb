@@ -11,7 +11,7 @@ describe PostsController do
       expect do
         post :create, post: { title: "Standup 12/12/12"}, standup_id: standup.id
       end.to change { Post.count }.by(1)
-      response.should be_redirect
+      expect(response).to be_redirect
     end
 
     it "adopts all items" do
@@ -27,7 +27,7 @@ describe PostsController do
     it "shows the post for editing" do
       get :edit, id: post.id
       expect(assigns[:post]).to eq post
-      response.should be_ok
+      expect(response).to be_ok
     end
   end
 
@@ -37,7 +37,7 @@ describe PostsController do
     it "shows the post" do
       get :show, id: post.id
       expect(assigns[:post]).to eq post
-      response.should be_ok
+      expect(response).to be_ok
       response.body.should include(post.title)
     end
   end
@@ -134,7 +134,7 @@ describe PostsController do
       put :post_to_blog, id: @post.id
 
       expect(blog_post.title).to eq @post.title
-      blog_post.body.should be
+      expect(blog_post.body).to be
     end
 
     it "posts to wordpress" do
@@ -150,7 +150,7 @@ describe PostsController do
 
       put :post_to_blog, id: @post.id
 
-      @post.reload.blogged_at.should be
+      expect(@post.reload.blogged_at).to be
     end
 
     it "records the published post id" do
@@ -195,13 +195,13 @@ describe PostsController do
 
     it "archives the post" do
       put :archive, id: post.id
-      post.reload.should be_archived
+      expect(post.reload).to be_archived
       response.should redirect_to post.standup
     end
 
     it "redirects back to index with a flash if it fails" do
       put :archive, id: 1234
-      response.should be_not_found
+      expect(response).to be_not_found
     end
   end
 end

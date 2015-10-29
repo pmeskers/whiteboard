@@ -47,7 +47,7 @@ describe Item do
         it 'should allow a past creation date' do
           Timecop.freeze('2014-04-28 14:42:11') do
             item.post_id = 1
-            item.should be_valid
+            expect(item).to be_valid
           end
         end
       end
@@ -59,7 +59,7 @@ describe Item do
       ['Help', 'Interesting', 'Event', 'Win'].each do |kind|
         it kind do
           item.kind = kind
-          item.should be_valid
+          expect(item).to be_valid
         end
       end
     end
@@ -68,7 +68,7 @@ describe Item do
       it "is valid with a date in the future" do
         item.kind = 'New face'
         item.date = Date.tomorrow
-        item.should be_valid
+        expect(item).to be_valid
       end
     end
 
