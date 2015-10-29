@@ -72,7 +72,7 @@ describe StandupsController do
   describe "#show" do
     it "redirects to the items page of the standup" do
       get :show, id: standup.id
-expect(response.body).to redirect_to standup_items_path(standup)
+      expect(response.body).to redirect_to standup_items_path(standup)
     end
 
     it 'saves standup id to cookie' do
