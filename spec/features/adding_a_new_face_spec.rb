@@ -19,7 +19,7 @@ describe "Adding new faces", js: true do
     find(:css, '[name="item[date]"]').click
     find(:css, '.next').click
 
-    find_field("item[date]").value.should == new_face_date
+    expect(find_field("item[date]").value).to eq new_face_date
     blur(page)
 
     click_on "Create New Face"

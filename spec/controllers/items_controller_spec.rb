@@ -18,7 +18,7 @@ describe ItemsController do
 
     it "should redirect to root on success" do
       post :create, valid_params
-      response.location.should == "http://test.host/standups/#{standup.id}"
+      expect(response.location).to eq "http://test.host/standups/#{standup.id}"
     end
 
     it "should render new on failure" do
@@ -52,14 +52,14 @@ describe ItemsController do
 
     it "uses the params to create the new item so you can set defaults in the link" do
       get :new, params.merge(item: { kind: 'Interesting' })
-      assigns[:item].kind.should == 'Interesting'
+      expect(assigns[:item].kind).to eq 'Interesting'
     end
 
     it "should set the author on the new Item" do
       session[:username] = "Barney Rubble"
       get :new, params
       item = assigns[:item]
-      item.author.should == "Barney Rubble"
+      expect(item.author).to eq "Barney Rubble"
     end
   end
 
@@ -72,7 +72,7 @@ describe ItemsController do
       get :index, params
       assigns[:items]['New face'].should    == [ new_face ]
       assigns[:items]['Help'].should        == [ help ]
-      assigns[:items]['Interesting'].should == [ interesting ]
+      expect(assigns[:items]['Interesting']).to eq [ interesting ]
       response.should be_ok
     end
 
@@ -81,7 +81,7 @@ describe ItemsController do
       old_help = create(:item, date: 4.days.ago, standup: standup)
 
       get :index, params
-      assigns[:items]['Help'].should == [ old_help, new_help ]
+      expect(assigns[:items]['Help']).to eq [ old_help, new_help ]
     end
 
     it "does not include items which are associated with a post" do
@@ -94,7 +94,7 @@ describe ItemsController do
       get :index, params
       assigns[:items]['New face'].should    == [ new_face ]
       assigns[:items]['Help'].should        == [ help ]
-      assigns[:items]['Interesting'].should == [ interesting ]
+      expect(assigns[:items]['Interesting']).to eq [ interesting ]
       response.should be_ok
     end
 
@@ -149,7 +149,7 @@ describe ItemsController do
     it "should edit the item" do
       item = create(:item)
       get :edit, id: item.id
-      assigns[:item].should == item
+      expect(assigns[:item]).to eq item
       response.should render_template 'items/new'
     end
 
@@ -164,7 +164,7 @@ describe ItemsController do
     it "should update the item" do
       item = create(:item)
       put :update, id: item.id, item: { title: "New Title" }
-      item.reload.title.should == "New Title"
+      expect(item.reload.title).to eq "New Title"
     end
 
     context "with a redirect_to param" do

@@ -173,7 +173,7 @@ describe "items", js: true do
 
     all('.exit-presentation').first.click
 
-    current_path.should == standup_items_path(standup)
+    expect(current_path).to eq standup_items_path(standup)
   end
 
   it 'does not let you create wins if the feature flag is off' do

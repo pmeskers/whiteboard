@@ -17,7 +17,7 @@ describe PostsController do
     it "adopts all items" do
       item = create(:item, standup: standup)
       post :create, post: { title: "Standup 12/12/12"}, standup_id: standup.id
-      assigns[:post].items.should == [ item ]
+      expect(assigns[:post].items).to eq [ item ]
     end
   end
 
@@ -26,7 +26,7 @@ describe PostsController do
 
     it "shows the post for editing" do
       get :edit, id: post.id
-      assigns[:post].should == post
+      expect(assigns[:post]).to eq post
       response.should be_ok
     end
   end
@@ -36,7 +36,7 @@ describe PostsController do
 
     it "shows the post" do
       get :show, id: post.id
-      assigns[:post].should == post
+      expect(assigns[:post]).to eq post
       response.should be_ok
       response.body.should include(post.title)
     end
@@ -47,8 +47,8 @@ describe PostsController do
 
     it "updates the post" do
       put :update, id: post.id, post: { title: "New Title", from: "Matthew & Matthew" }
-      post.reload.title.should == "New Title"
-      post.from.should == "Matthew & Matthew"
+      expect(post.reload.title).to eq "New Title"
+      expect(post.from).to eq "Matthew & Matthew"
     end
   end
 
@@ -58,21 +58,21 @@ describe PostsController do
     it "renders an index of posts" do
       post = create(:post, standup: standup)
       get :index, standup_id: standup.id
-      assigns[:posts].should == [ post ]
+      expect(assigns[:posts]).to eq [ post ]
     end
 
     it "does not include archived" do
       unarchived_post = create(:post, standup: standup)
       create(:post, archived: true, standup: standup)
       get :index, standup_id: standup.id
-      assigns[:posts].should == [ unarchived_post ]
+      expect(assigns[:posts]).to eq [ unarchived_post ]
     end
 
     it "does not include posts associated with other standups" do
       standup_post = create(:post, standup: standup)
       create(:post, standup: create(:standup))
       get :index, standup_id: standup.id
-      assigns[:posts].should == [ standup_post ]
+      expect(assigns[:posts]).to eq [ standup_post ]
     end
   end
 
@@ -106,14 +106,14 @@ describe PostsController do
       post = create(:post, items: [ create(:item) ] )
       put :send_email, id: post.id
       response.should redirect_to(edit_post_path(post))
-      ActionMailer::Base.deliveries.last.to.should == [post.standup.to_address]
+      expect(ActionMailer::Base.deliveries.last.to).to eq [post.standup.to_address]
     end
 
     it "does not allow resending" do
       post = create(:post, sent_at: Time.now )
       put :send_email, id: post.id
       response.should redirect_to(edit_post_path(post))
-      flash[:error].should == "The post has already been emailed"
+      expect(flash[:error]).to eq "The post has already been emailed"
     end
   end
 
@@ -133,7 +133,7 @@ describe PostsController do
 
       put :post_to_blog, id: @post.id
 
-      blog_post.title.should == @post.title
+      expect(blog_post.title).to eq @post.title
       blog_post.body.should be
     end
 
@@ -168,7 +168,7 @@ describe PostsController do
       put :post_to_blog, id: @post.id
 
       response.should redirect_to(edit_post_path(@post))
-      flash[:error].should == "The post has already been blogged"
+      expect(flash[:error]).to eq "The post has already been blogged"
     end
 
     context 'unsuccessful post' do
@@ -179,7 +179,7 @@ describe PostsController do
       end
 
       it "catches XMLRPC::FaultException and displays error message" do
-        flash[:error].should == "While posting to the blog, the service reported the following error: 'Wrong size. Was 180, should be 131', please repost."
+        expect(flash[:error]).to eq "While posting to the blog, the service reported the following error: 'Wrong size. Was 180, should be 131', please repost."
         response.should redirect_to(edit_post_path(@post))
       end
 

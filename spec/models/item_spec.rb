@@ -80,7 +80,7 @@ describe Item do
 
   describe "defaults" do
     it "defaults public to false" do
-      Item.new.public.should == false
+      expect(Item.new.public).to eq false
     end
   end
 
@@ -105,7 +105,7 @@ describe Item do
     it { should include event_after_date }
 
     it "orders the events by date" do
-      subject.should == [event_on_date, event_after_date]
+      expect(subject).to eq [event_on_date, event_after_date]
     end
 
     it "does not include events that have a post_id set" do
@@ -184,7 +184,7 @@ describe Item do
         item.standup = standup
       end
 
-      item.relative_date.should == :today
+      expect(item.relative_date).to eq :today
     end
 
     it 'returns :tomorrow for an event taking place tomorrow' do
@@ -193,7 +193,7 @@ describe Item do
         item.standup = standup
       end
 
-      item.relative_date.should == :tomorrow
+      expect(item.relative_date).to eq :tomorrow
     end
 
     it 'returns :upcoming for an event taking place after tomorrow' do
@@ -202,7 +202,7 @@ describe Item do
         item.standup = standup
       end
 
-      item.relative_date.should == :upcoming
+      expect(item.relative_date).to eq :upcoming
     end
   end
 
@@ -211,14 +211,14 @@ describe Item do
       old_help = FactoryGirl.create(:item, kind: 'Help', date: 2.days.ago)
       interesting = FactoryGirl.create(:item, kind: 'Interesting')
 
-      Item.orphans.should == {'Help' => [old_help], 'Interesting' => [interesting]}
+      expect(Item.orphans).to eq({'Help' => [old_help], 'Interesting' => [interesting]})
     end
 
     it 'returns items in date asc order' do
       interesting = FactoryGirl.create(:item, kind: 'Interesting')
       old_interesting = FactoryGirl.create(:item, kind: 'Interesting', date: 2.days.ago)
 
-      Item.orphans.should == {'Interesting' => [old_interesting, interesting]}
+      expect(Item.orphans).to eq({'Interesting' => [old_interesting, interesting]})
     end
   end
 
@@ -228,7 +228,7 @@ describe Item do
       FactoryGirl.create(:item, kind: 'Event')
       FactoryGirl.create(:item, kind: 'Help', date: Date.yesterday)
 
-      Item.orphans.length.should == 1
+      expect(Item.orphans.length).to eq 1
     end
   end
 end

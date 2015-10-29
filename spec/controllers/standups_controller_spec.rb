@@ -64,7 +64,7 @@ describe StandupsController do
   describe "#edit" do
     it "shows the post for editing" do
       get :edit, id: standup.id
-      assigns[:standup].should == standup
+      expect(assigns[:standup]).to eq standup
       response.should be_ok
     end
   end
@@ -91,14 +91,14 @@ describe StandupsController do
     context "with valid params" do
       it "updates the post" do
         put :update, id: standup.id, standup: {title: "New Title"}
-        standup.reload.title.should == "New Title"
+        expect(standup.reload.title).to eq "New Title"
       end
     end
 
     context "with invalid params" do
       it "does not update the post" do
         put :update, id: standup.id, standup: {title: nil}
-        standup.reload.title.should == standup.title
+        expect(standup.reload.title).to eq standup.title
         response.should render_template 'standups/edit'
       end
     end

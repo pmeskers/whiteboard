@@ -8,11 +8,11 @@ describe PostMailer do
     let(:mail) { PostMailer.send_to_all(post, destination, from_address, post.standup_id) }
 
     it 'sets the title to be the posts title' do
-      mail.subject.should == post.title_for_email
+      expect(mail.subject).to eq post.title_for_email
     end
 
     it 'sets the from address' do
-      mail.from.should == [from_address]
+      expect(mail.from).to eq [from_address]
     end
 
     it 'renders the items in the body of the message' do
@@ -29,7 +29,7 @@ describe PostMailer do
     end
 
     it 'delivers to the specified address' do
-      mail.to.should == [destination]
+      expect(mail.to).to eq [destination]
     end
   end
 end
