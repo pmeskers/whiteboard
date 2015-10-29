@@ -23,7 +23,7 @@ describe ItemsController do
 
     it "should render new on failure" do
       post :create, item: {}
-      response.should render_template 'items/new'
+      expect(response).to render_template 'items/new'
     end
 
     it "sets the post_id if one is provided" do
@@ -41,13 +41,13 @@ describe ItemsController do
     it "should create a new Item object" do
       get :new, params
       expect(assigns[:item]).to be_new_record
-      response.should render_template('items/new')
+      expect(response).to render_template('items/new')
       expect(response).to be_ok
     end
 
     it "should render the custom template for the kind if there is one" do
       get :new, params.merge(item: { kind: 'New face' })
-      response.should render_template('items/new_new_face')
+      expect(response).to render_template('items/new_new_face')
     end
 
     it "uses the params to create the new item so you can set defaults in the link" do
@@ -113,7 +113,7 @@ describe ItemsController do
   describe "#presentation" do
     it "renders the deck template" do
       get :presentation, params
-      response.should render_template('deck')
+      expect(response).to render_template('deck')
     end
 
     it "loads the posts" do
@@ -150,13 +150,13 @@ describe ItemsController do
       item = create(:item)
       get :edit, id: item.id
       expect(assigns[:item]).to eq item
-      response.should render_template 'items/new'
+      expect(response).to render_template 'items/new'
     end
 
     it "should render the custom template for the kind if there is one" do
       item = create(:new_face)
       get :edit, id: item.id
-      response.should render_template('items/new_new_face')
+      expect(response).to render_template('items/new_new_face')
     end
   end
 
@@ -189,13 +189,13 @@ describe ItemsController do
       it "should render new" do
         item = create(:item)
         put :update, id: item.id, post_id: item.post, item: { title: "" }
-        response.should render_template('items/new')
+        expect(response).to render_template('items/new')
       end
 
       it "should render a custom template if there is one" do
         item = create(:new_face)
         put :update, id: item.id, post_id: item.post, item: { title: "" }
-        response.should render_template('items/new_new_face')
+        expect(response).to render_template('items/new_new_face')
       end
     end
   end

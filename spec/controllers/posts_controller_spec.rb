@@ -86,7 +86,7 @@ describe PostsController do
       get :archived, standup_id: standup.id
 
       assigns[:posts].should =~ [ archived_post  ]
-      response.should render_template('archived')
+      expect(response).to render_template('archived')
       response.body.should include(archived_post.title)
     end
 

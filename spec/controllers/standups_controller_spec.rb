@@ -22,7 +22,7 @@ describe StandupsController do
         expect do
           post :create, standup: {}
         end.to change { Standup.count }.by(0)
-        response.should render_template 'standups/new'
+        expect(response).to render_template 'standups/new'
       end
     end
   end
@@ -31,7 +31,7 @@ describe StandupsController do
     it "renders the new standups template" do
       get :new
       expect(response).to be_ok
-      response.should render_template 'standups/new'
+      expect(response).to render_template 'standups/new'
     end
   end
 
@@ -99,7 +99,7 @@ describe StandupsController do
       it "does not update the post" do
         put :update, id: standup.id, standup: {title: nil}
         expect(standup.reload.title).to eq standup.title
-        response.should render_template 'standups/edit'
+        expect(response).to render_template 'standups/edit'
       end
     end
   end
