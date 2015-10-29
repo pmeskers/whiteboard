@@ -38,6 +38,13 @@ describe ItemsController do
   end
 
   describe '#new' do
+    before do
+      Timecop.freeze(Time.zone.local(2001,1,1, 20,00))
+    end
+    after do
+      Timecop.return
+    end
+
     it "should create a new Item object" do
       get :new, params
       expect(assigns[:item]).to be_new_record
@@ -60,6 +67,12 @@ describe ItemsController do
       get :new, params
       item = assigns[:item]
       expect(item.author).to eq "Barney Rubble"
+    end
+
+    it "should set the date of the item with respect to the local time zone" do
+      get :new, params
+      item = assigns[:item]
+      expect(item.date).to eq Date.new(2001, 1, 1)
     end
   end
 
@@ -100,8 +113,8 @@ describe ItemsController do
 
     it "does not include items associated with other standups" do
       other_standup = create(:standup)
-      standup_event = create(:item, kind: "Event", standup: standup, date: Date.tomorrow)
-      other_standup_event = create(:item, kind: "Event", standup: other_standup, date: Date.tomorrow)
+      standup_event = create(:item, kind: "Event", standup: standup, date: Time.zone.tomorrow)
+      other_standup_event = create(:item, kind: "Event", standup: other_standup, date: Time.zone.tomorrow)
 
       get :index, params
 
@@ -123,8 +136,8 @@ describe ItemsController do
 
     it "only loads items from the current standup" do
       other_standup = create(:standup)
-      other_standup_event = create(:item, standup: other_standup, date: Date.tomorrow, kind: "Event")
-      standup_event = create(:item, standup: standup, date: Date.tomorrow, kind: "Event")
+      other_standup_event = create(:item, standup: other_standup, date: Time.zone.tomorrow, kind: "Event")
+      standup_event = create(:item, standup: standup, date: Time.zone.tomorrow, kind: "Event")
 
       get :presentation, params
 

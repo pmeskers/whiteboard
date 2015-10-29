@@ -11,12 +11,12 @@ describe StandupPresenter do
 
   context 'when standup object does not have a closing message' do
     it 'picks a closing message' do
-      allow(Date).to receive_message_chain(:today, :wday).and_return(4)
+      allow(Time).to receive_message_chain(:zone, :today, :wday).and_return(4)
       expect(StandupPresenter::STANDUP_CLOSINGS).to include(subject.closing_message)
     end
 
     it 'should remind us when its Floor Friday' do
-      allow(Date).to receive_message_chain(:today, :wday).and_return(5)
+      allow(Time).to receive_message_chain(:zone, :today, :wday).and_return(5)
       expect(subject.closing_message).to eq "STRETCH! It's Floor Friday!"
     end
   end

@@ -32,7 +32,7 @@ describe ApplicationHelper do
     subject { helper.format_title(item) }
 
     context "the item is an event" do
-      let(:item) { Item.new(kind: "Interesting", title: "Not Interesting", date: Date.tomorrow) }
+      let(:item) { Item.new(kind: "Interesting", title: "Not Interesting", date: Time.zone.tomorrow) }
       it { is_expected.to eq "#{item.date.strftime("%A(%m/%d)")}: #{item.title}" }
     end
 
@@ -43,7 +43,7 @@ describe ApplicationHelper do
       end
 
       context "the item does have a date" do
-        let(:item) { Item.new(kind: "Interesting", title: "Not Interesting", date: Date.tomorrow) }
+        let(:item) { Item.new(kind: "Interesting", title: "Not Interesting", date: Time.zone.tomorrow) }
         it { is_expected.to eq "#{item.date.strftime("%A(%m/%d)")}: #{item.title}" }
       end
     end
@@ -83,10 +83,13 @@ describe ApplicationHelper do
         end
 
         describe "when the date is in the future" do
+
           before do
-            allow(Date).to receive(:today).and_return(Date.new(2012, 11, 05))
+            Timecop.freeze(Time.zone.local(2012,11,05, 20,00))
             item.date = Date.new(2012, 11, 07)
           end
+
+          after { Timecop.return }
 
           it "returns the day of the week" do
             label = helper.date_label(item)
@@ -96,9 +99,11 @@ describe ApplicationHelper do
 
         describe "when the date is more than a week away" do
           before do
-            allow(Date).to receive(:today).and_return(Date.new(2012, 11, 04))
+            Timecop.freeze(Time.zone.local(2012,11,04, 20,00))
             item.date = Date.new(2012, 11, 22)
           end
+
+          after { Timecop.return }
 
           it "displays the date rather than the day name" do
             label = helper.date_label(item)

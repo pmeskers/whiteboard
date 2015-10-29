@@ -23,7 +23,7 @@ class Item < ActiveRecord::Base
   end
 
   def self.orphans
-    where(post_id: nil).where.not(kind: 'Event').where("date >= ? OR kind = 'Help' OR kind = 'Interesting'", Date.today).order("date ASC").group_by(&:kind)
+    where(post_id: nil).where.not(kind: 'Event').where("date >= ? OR kind = 'Help' OR kind = 'Interesting'", Time.zone.today).order("date ASC").group_by(&:kind)
   end
 
   def self.events_on_or_after(date, standup)
@@ -38,8 +38,8 @@ class Item < ActiveRecord::Base
   def self.for_post(standup)
     where(post_id: nil, bumped: false).
       where("standup_id = #{standup.id} OR standup_id IS NULL").
-      where("(kind != 'Event' OR date = ?)", Date.today).
-      where("date IS NULL OR date <= ?", Date.today)
+      where("(kind != 'Event' OR date = ?)", Time.zone.today).
+      where("date IS NULL OR date <= ?", Time.zone.today)
   end
 
   def possible_template_name

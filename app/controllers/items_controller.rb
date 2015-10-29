@@ -13,13 +13,14 @@ class ItemsController < ApplicationController
   def new
     @standup = Standup.find_by_id(params[:standup_id])
     options = (params[:item] || {}).merge({post_id: params[:post_id], author: session[:username]})
+    options.reverse_merge!(date: Time.zone.today)
     @item = @standup.items.build(options)
     render_custom_item_template @item
   end
 
   def index
     @standup = Standup.find_by_id(params[:standup_id])
-    events = Item.events_on_or_after(Date.today, @standup)
+    events = Item.events_on_or_after(Time.zone.today, @standup)
     @items = @standup.items.orphans.merge(events)
   end
 
@@ -45,7 +46,7 @@ class ItemsController < ApplicationController
   end
 
   def presentation
-    events = Item.events_on_or_after(Date.today, @standup)
+    events = Item.events_on_or_after(Time.zone.today, @standup)
     @items = @standup.items.orphans.merge(events)
     render layout: 'deck'
   end

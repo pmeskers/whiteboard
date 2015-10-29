@@ -51,7 +51,7 @@ describe "publishing", js: true do
 
     find('a[data-kind="Event"] i').click
     fill_in 'item_title', :with => "Happy Hour"
-    fill_in 'item_date', :with => Date.today
+    fill_in 'item_date', :with => Time.zone.today
     select 'Camelot', from: 'item[standup_id]'
     click_on 'Post to Blog'
     click_button 'Create Item'
@@ -79,7 +79,7 @@ describe "publishing", js: true do
 
     find('a[data-kind="Event"] i').click
     fill_in 'item_title', :with => "Happy Hour"
-    fill_in 'item_date', :with => Date.today
+    fill_in 'item_date', :with => Time.zone.today
     select 'Camelot', from: 'item[standup_id]'
     click_on 'Post to Blog'
     click_button 'Create Item'

@@ -27,7 +27,7 @@ describe Item do
       let(:item) { build(:new_face) }
 
       context 'when new' do
-        let(:yesterday) { Date.today - 1.day }
+        let(:yesterday) { Time.zone.today - 1.day }
 
         it 'should disallow a past creation date' do
           Timecop.freeze do
@@ -67,7 +67,7 @@ describe Item do
     describe "New face" do
       it "is valid with a date in the future" do
         item.kind = 'New face'
-        item.date = Date.tomorrow
+        item.date = Time.zone.tomorrow
         expect(item).to be_valid
       end
     end
@@ -125,14 +125,14 @@ describe Item do
     let!(:item_not_bumped) { create(:item, bumped: false, kind: "Help", standup: standup) }
     let!(:bumped_item) { create(:item, bumped: true, kind: "Help", standup: standup) }
 
-    let!(:item_for_today) { create(:item, date: Date.today, kind: "Help", standup: standup) }
+    let!(:item_for_today) { create(:item, date: Time.zone.today, kind: "Help", standup: standup) }
     let!(:item_with_no_date) { create(:item, date: nil, kind: "Help", standup: standup) }
-    let!(:item_for_tomorrow) { create(:item, date: Date.tomorrow, kind: "Help", standup: standup) }
+    let!(:item_for_tomorrow) { create(:item, date: Time.zone.tomorrow, kind: "Help", standup: standup) }
 
     let!(:item_for_different_standup) { create(:item, date: nil, kind: "Help", standup: other_standup) }
 
-    let!(:event_today) { create(:item, date: Date.today, kind: 'Event', standup: standup) }
-    let!(:event_tomorrow) { create(:item, date: Date.tomorrow, kind: 'Event', standup: standup) }
+    let!(:event_today) { create(:item, date: Time.zone.today, kind: 'Event', standup: standup) }
+    let!(:event_tomorrow) { create(:item, date: Time.zone.tomorrow, kind: 'Event', standup: standup) }
 
     it "includes item with no post id" do
       expect(subject).to include item_with_no_post_id

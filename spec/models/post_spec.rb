@@ -40,8 +40,8 @@ describe Post do
     end
 
     it "does not adopt items with a date after today" do
-      item_for_today = create(:item, date: Date.today, standup: standup)
-      item_for_tomorrow = create(:item, date: Date.tomorrow, standup: standup)
+      item_for_today = create(:item, date: Time.zone.today, standup: standup)
+      item_for_tomorrow = create(:item, date: Time.zone.tomorrow, standup: standup)
 
       post = create(:post, standup: standup)
       post.adopt_all_the_items
@@ -116,7 +116,7 @@ describe Post do
       post = create(:post)
       post.items = [create(:event, created_at: Time.now, standup_id: post.standup.id)]
 
-      future_item = create(:event, created_at: Date.tomorrow, standup_id: post.standup.id)
+      future_item = create(:event, created_at: Time.zone.tomorrow, standup_id: post.standup.id)
       expect(post.items_by_type['Event']).to eq post.items + [future_item]
     end
   end
