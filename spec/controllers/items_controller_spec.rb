@@ -24,6 +24,7 @@ describe ItemsController do
     it "should redirect to root on success" do
       post :create, valid_params
       expect(response.location).to eq "http://test.host/standups/#{standup.id}"
+      expect(response.headers["Item-Id"]).to eq "1"
     end
 
     it "should render new on failure" do

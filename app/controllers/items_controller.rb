@@ -5,6 +5,7 @@ class ItemsController < ApplicationController
   def create
     @item = Item.new(params[:item])
     if @item.save
+      response.headers["Item-Id"]=@item.id.to_s
       redirect_to @item.post ? edit_post_path(@item.post) : standup_path(@item.standup)
     else
       render 'items/new'
