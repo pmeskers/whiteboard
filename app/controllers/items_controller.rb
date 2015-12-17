@@ -1,6 +1,7 @@
 class ItemsController < ApplicationController
   before_filter :load_standup
   around_filter :standup_timezone
+  respond_to :html, :json
 
   def create
     @item = Item.new(params[:item])
@@ -22,6 +23,7 @@ class ItemsController < ApplicationController
   def index
     events = Item.events_on_or_after(Time.zone.today, @standup)
     @items = @standup.items.orphans.merge(events)
+    respond_with(@items)
   end
 
   def destroy
