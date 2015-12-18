@@ -16,16 +16,16 @@ describe PostMailer do
     end
 
     it 'renders the items in the body of the message' do
-expect(mail.text_part.body).to include(post.items.first.title)
+      expect(mail.text_part.body).to include(post.items.first.title)
     end
 
     it 'includes a link to the standup' do
-expect(mail.text_part.body).to include(standup_items_url(post.standup))
+      expect(mail.text_part.body).to include(standup_items_url(post.standup))
     end
 
     it 'properly deals with & and " by not escaping them' do
-expect(mail.text_part.body).to include('"Winning"')
-expect(mail.text_part.body).to include('Like this & like "that"')
+      expect(mail.text_part.body).to include('"Winning"')
+      expect(mail.text_part.body).to include('Like this & like "that"')
     end
 
     it 'delivers to the specified address' do
