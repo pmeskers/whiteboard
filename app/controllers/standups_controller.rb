@@ -2,6 +2,7 @@ class StandupsController < ApplicationController
   before_filter :load_standup, only: [:edit, :show, :update, :destroy]
   around_filter :standup_timezone, only: [:edit, :show, :update, :destroy]
 
+
   def create
     @standup = Standup.create(params[:standup])
 
@@ -18,18 +19,33 @@ class StandupsController < ApplicationController
   end
 
   def index
-    @standups = Standup.all.sort{ |a,b| a.title.downcase <=> b.title.downcase }
+    @standups = Standup.all.sort { |a, b| a.title.downcase <=> b.title.downcase }
   end
 
-  def edit; end
+  def edit;
+  end
 
   def show
     if @standup
       session[:last_visited_standup] = params[:id]
-      redirect_to standup_items_path(@standup)
+      respond_to do |format|
+        format.html {
+          redirect_to standup_items_path(@standup)
+        }
+        format.json {
+          render json: @standup.to_json(:methods => :time_zone_name_iana)
+        }
+      end
     else
-      flash[:error] = "A standup with the ID #{params[:id]} does not exist."
-      redirect_to standups_path
+      respond_to do |format|
+        format.html {
+          flash[:error] = "A standup with the ID #{params[:id]} does not exist."
+          redirect_to standups_path
+        }
+        format.json {
+          head :not_found
+        }
+      end
     end
   end
 

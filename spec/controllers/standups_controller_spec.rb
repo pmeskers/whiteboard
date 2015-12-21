@@ -79,6 +79,19 @@ describe StandupsController do
       expect(response.body).to redirect_to standup_items_path(standup)
     end
 
+    it "renders json and time zone IANA field" do
+      request.accept = Mime::JSON.to_s
+      get :show, id: standup.id
+      expect(response.content_type).to eq(Mime::JSON.to_s)
+      expect(response.body).to include(standup.time_zone_name_iana)
+    end
+
+    it "returns 404 when standup not found" do
+      request.accept = Mime::JSON.to_s
+      get :show, id: 123
+      expect(response).to be_not_found
+    end
+
     it 'saves standup id to cookie' do
       get :show, id: standup.id
       expect(session[:last_visited_standup]).to eq(standup.id.to_s)
