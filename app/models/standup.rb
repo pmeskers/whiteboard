@@ -33,6 +33,10 @@ class Standup < ActiveRecord::Base
     standup_time
   end
 
+  def time_zone_name_iana
+    ActiveSupport::TimeZone.find_tzinfo(self.time_zone_name).identifier
+  end
+
   def finished_today
     standup_time_today < time_zone.now
   end

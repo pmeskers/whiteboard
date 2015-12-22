@@ -59,6 +59,12 @@ describe Standup do
       end
     end
 
+    describe "#time_zone_name_iana" do
+      it "returns IANA format of the time zone" do
+        expect(@standup.time_zone_name_iana).to eq "America/Los_Angeles"
+      end
+    end
+
     describe "#next_standup_date" do
       context "when the standup is today" do
         it "returns date and time as an integer" do
