@@ -4,6 +4,11 @@ describe PostsController do
   let(:standup) { create(:standup) }
   before do
     request.session[:logged_in] = true
+    Timecop.freeze(Time.zone.local(2001,1,1, 20,00))
+  end
+
+  after do
+    Timecop.return
   end
 
   describe "#create" do
