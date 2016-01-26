@@ -4,7 +4,7 @@ describe PostsController do
   let(:standup) { create(:standup) }
   before do
     request.session[:logged_in] = true
-    Timecop.freeze(Time.zone.local(2001,1,1, 20,00))
+    Timecop.freeze(Time.zone.local(2001, 1, 1, 20, 00))
   end
 
   after do
@@ -12,21 +12,63 @@ describe PostsController do
   end
 
   describe "#create" do
+    let(:standup) { create(:standup) }
+
     it "creates a post" do
       expect do
         post :create, post: {title: "Standup 12/12/12"}, standup_id: standup.id
       end.to change { Post.count }.by(1)
-      expect(response).to be_redirect
+    end
+
+    it "redirects to the standup" do
+      post :create, post: {title: "Standup 12/12/12"}, standup_id: standup.id
+      expect(response).to redirect_to(standup_path(standup))
     end
 
     it "adopts all items" do
       item = create(:item, standup: standup)
       post :create, post: {title: "Standup 12/12/12"}, standup_id: standup.id
-      expect(assigns[:post].items).to eq [item]
+      expect(standup.posts.last.items).to eq [item]
+    end
+
+    it "sends the email" do
+      post :create, post: {title: "Standup 12/12/12"}, standup_id: standup.id
+      expect(ActionMailer::Base.deliveries).to_not be_empty
+      expect(ActionMailer::Base.deliveries.last.to).to eq [standup.to_address]
+    end
+
+    it "archives the post" do
+      post :create, post: {title: "Standup 12/12/12"}, standup_id: standup.id
+      expect(standup.posts.last).to be_archived
+    end
+
+    it "sets a flash notifying that the email was sent and the post was archived" do
+      post :create, post: {title: "Standup 12/12/12"}, standup_id: standup.id
+      expect(flash[:notice]).to eq("Successfully sent Standup email!")
     end
 
     it_behaves_like "an action occurring within the standup's timezone" do
       after { post :create, post: {title: "Standup 12/12/12"}, standup_id: standup.id }
+    end
+
+    context "when sending email fails" do
+      before do
+        allow(PostMailer).to receive(:send_to_all).and_raise("SOME ARBITRARY ERROR")
+        post :create, post: {title: "Standup 12/12/12"}, standup_id: standup.id
+      end
+
+      it "displays an error message that the email could not be sent" do
+        expect(flash[:error]).to eq("Failed to send email. Please try again.")
+      end
+
+      it "raises an error and does not archive the post if sending email fails" do
+        expect(standup.posts.last).to_not be_archived
+      end
+
+      it "redirects to the post" do
+        post :create, post: {title: "Standup 12/12/12"}, standup_id: standup.id
+        expect(response).to redirect_to(edit_post_path(standup.posts.last))
+      end
     end
   end
 
@@ -130,7 +172,7 @@ describe PostsController do
     end
   end
 
-  describe "#send" do
+  describe "#send_email" do
     it "sends the email" do
       post = create(:post, items: [create(:item)])
       put :send_email, id: post.id

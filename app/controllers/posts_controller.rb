@@ -7,9 +7,20 @@ class PostsController < ApplicationController
   def create
     @standup = Standup.find_by_id(params[:standup_id])
     @post = @standup.posts.build(params[:post])
+
     if @post.save
       @post.adopt_all_the_items
-      redirect_to edit_post_path(@post)
+
+      begin
+        @post.deliver_email
+        @post.archived = true
+        @post.save!
+        flash[:notice] = "Successfully sent Standup email!"
+        redirect_to @standup
+      rescue
+        flash[:error] = "Failed to send email. Please try again."
+        redirect_to edit_post_path(@post)
+      end
     else
       flash[:error] = "Unable to create post"
       redirect_to @standup
@@ -94,10 +105,10 @@ class PostsController < ApplicationController
 
   def prepare_post_body(items)
     GitHub::Markdown.render(
-      render_to_string(partial: 'items/as_markdown',
-                       formats: [:text],
-                       layout: false,
-                       locals: {items: items, include_authors: false}))
+        render_to_string(partial: 'items/as_markdown',
+                         formats: [:text],
+                         layout: false,
+                         locals: {items: items, include_authors: false}))
   end
 
 

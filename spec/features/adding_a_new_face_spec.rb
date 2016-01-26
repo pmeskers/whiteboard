@@ -42,7 +42,7 @@ describe "Adding new faces", js: true do
       find('#create-post').click
 
       expect(page).to_not have_content "Unable to create post"
-      expect(current_path).to_not eq(standup_items_path(standup))
+      expect(current_path).to eq(standup_items_path(standup))
 
       post = Post.last
       expect(post.items).to match [new_face]

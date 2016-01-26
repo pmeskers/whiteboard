@@ -29,6 +29,23 @@ describe StandupPresenter do
     end
   end
 
+  it "returns the create post confirmation message for the 1-click flow" do
+    expect(subject.create_post_confirm_message).to eq "You are about to send today's stand up email. Continue?"
+  end
+
+  it "returns the create post button text for the 1-click flow" do
+    expect(subject.create_post_button_text).to eq "Send Email"
+  end
+
+  it "returns the create post sender placeholder" do
+    expect(subject.create_post_sender_field_placeholder).to eq("Standup host(s)")
+  end
+
+  it "returns the create post subject placeholder" do
+    expect(subject.create_post_subject_field_placeholder).to eq("Email subject")
+  end
+
+
   describe '#closing_image' do
     let(:image_urls) {
       ['http://example.com/bar.png', 'http://example.com/baz.png']
