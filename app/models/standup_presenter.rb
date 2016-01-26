@@ -34,6 +34,10 @@ class StandupPresenter < SimpleDelegator
     "Email subject"
   end
 
+  def last_email_time_message
+    @standup.last_email_time.try(:strftime, "Last standup email sent: %-l:%M%p %A %b %-d, %Y")
+  end
+
   def closing_image
     return nil unless @standup.image_days.include? @standup.date_today.strftime("%a")
     @standup.image_urls.split("\n").reject(&:blank?).sample

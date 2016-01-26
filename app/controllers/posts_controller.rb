@@ -105,10 +105,10 @@ class PostsController < ApplicationController
 
   def prepare_post_body(items)
     GitHub::Markdown.render(
-        render_to_string(partial: 'items/as_markdown',
-                         formats: [:text],
-                         layout: false,
-                         locals: {items: items, include_authors: false}))
+      render_to_string(partial: 'items/as_markdown',
+                       formats: [:text],
+                       layout: false,
+                       locals: {items: items, include_authors: false}))
   end
 
 
