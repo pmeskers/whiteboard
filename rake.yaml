@@ -1,0 +1,5 @@
+config:
+  platform: linux
+  image: "docker:///ubuntu"
+  run:
+    path: "./script/ci.sh"

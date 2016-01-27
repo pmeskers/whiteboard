@@ -1,0 +1,14 @@
+resources:
+- name: whiteboard
+  type: git
+  source:
+    uri: https://github.com/pivotal/whiteboard.git
+
+jobs:
+- name: ci
+  plan:
+  - get: whiteboard
+  - task: rake
+    file: rake.yaml
+
+
