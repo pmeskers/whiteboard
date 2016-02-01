@@ -33,7 +33,7 @@ describe ApplicationHelper do
 
     context "the item is an event" do
       let(:item) { Item.new(kind: "Interesting", title: "Not Interesting", date: Time.zone.tomorrow) }
-      it { is_expected.to eq "#{item.date.strftime("%A(%m/%d)")}: #{item.title}" }
+      it { is_expected.to eq "#{item.date.strftime("%A(%b %d)")}: #{item.title}" }
     end
 
     context "the item is not an event" do
@@ -44,7 +44,7 @@ describe ApplicationHelper do
 
       context "the item does have a date" do
         let(:item) { Item.new(kind: "Interesting", title: "Not Interesting", date: Time.zone.tomorrow) }
-        it { is_expected.to eq "#{item.date.strftime("%A(%m/%d)")}: #{item.title}" }
+        it { is_expected.to eq "#{item.date.strftime("%A(%b %d)")}: #{item.title}" }
       end
     end
   end
@@ -107,7 +107,7 @@ describe ApplicationHelper do
 
           it "displays the date rather than the day name" do
             label = helper.date_label(item)
-            expect(label).to eq "11/22: "
+            expect(label).to eq "Nov 22: "
           end
         end
       end

@@ -1,7 +1,7 @@
   <section class="slide">
     <h1>
       Standup<br/>
-      <span><%= @standup.date_today.strftime("%m/%d/%y") %></span>
+      <span><%= l(@standup.date_today, format: :short) %></span>
 
       <div class="countdown">
         <% if @standup.finished_today %>
