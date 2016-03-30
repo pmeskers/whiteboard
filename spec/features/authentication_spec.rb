@@ -55,4 +55,21 @@ describe 'Authenticating', type: :feature do
       end
     end
   end
+
+  context 'with no ips in the whitelist' do
+    describe 'logging in' do
+      before do
+        log_in_to_okta('pauliepivot@pivotal.io')
+        ENV['IP_WHITELIST'] = nil
+      end
+
+      it 'should not break, but instead allow you to log in and view the dashboard' do
+        visit '/login'
+        expect(page).to have_content('Log in with Okta')
+        click_on 'Log in with Okta'
+        expect(page).to have_content('Whiteboard')
+        expect(page).to have_content('Choose a Standup'.upcase)
+      end
+    end
+  end
 end

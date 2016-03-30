@@ -3,8 +3,12 @@ class ApplicationController < ActionController::Base
   before_filter :require_login
 
   def require_login
-    mapper = IpFencer.new(hydrate_ips)
-    redirect_to '/login' unless session[:logged_in] || mapper.authorized?(request.remote_ip)
+    if ENV['IP_WHITELIST']
+      mapper = IpFencer.new(hydrate_ips)
+      redirect_to '/login' unless session[:logged_in] || mapper.authorized?(request.remote_ip)
+    else
+      redirect_to '/login' unless session[:logged_in]
+    end
   end
 
   def hydrate_ips
