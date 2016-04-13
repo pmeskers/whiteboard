@@ -1,3 +1,30 @@
-<%= raw GitHub::Markdown.render(render partial: 'items/as_markdown', handlers: [:erb], formats: :text, locals: { items: @post.items_by_type, include_authors: true }) %>
----------------------------
-This standup starts at <%= standup_items_url(@standup_id) %>
+<div>
+  <h1>
+    <%= @standup.title %> Standup
+  </h1>
+  <% Item.kinds.each do |kind| %>
+    <% if @items[kind.name].present? %>
+      <h2>
+        <%= kind.name.pluralize.html_safe %>
+      </h2>
+
+      <% @items[kind.name].each do |item| %>
+        <h3 style="margin-bottom:0">
+          <% if item.date.present? %>
+            <%= date_label(item) %><%= item.title.html_safe %>
+          <% else %>
+            <%= item.title.html_safe %>
+          <% end %>
+        </h3>
+
+        <%= "(#{item.author})".html_safe if @include_authors && item.author.present? %>
+
+        <p style="margin-top:0">
+          <% if item.description.present? %>
+            <%= item.description.html_safe %>
+          <% end %>
+        </p>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>
