@@ -6,7 +6,7 @@ describe "standups", :js do
     visit '/'
     FactoryGirl.create(:standup)
 
-    expect(find('h2')).to have_content 'CHOOSE A STANDUP'
+    expect(find('h2')).to have_content 'Choose a Standup'
     click_link('New Standup')
 
     fill_in 'standup_title', with: "London"
@@ -19,7 +19,7 @@ describe "standups", :js do
     click_button 'Create Standup'
 
     click_link('All Standups')
-    expect(page).to have_content 'LONDON'
+    expect(page).to have_content 'London'
     click_link('London')
   end
 
@@ -72,7 +72,7 @@ describe "standups", :js do
     london_standup.save
 
     visit '/'
-    expect(page).not_to have_content('London')
+    expect(page).not_to have_content('London Whiteboard')
     expect(page).to have_content('Whiteboard')
   end
 end
