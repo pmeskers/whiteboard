@@ -6,9 +6,9 @@
 
   <div class='container-table-match'>
     <%= link_to 'Presentation', presentation_standup_items_path(@standup), class: 'btn btn-warning navbar-btn align-right mbxl' %>
-    <div class="bg-light bal pvxl phm">
-      <h2 class="h2 mbl align-center">Send Standup Email</h2>
-      <span class="badge alert-info"><%= @standup.last_email_time_message %></span>
+    <div class="bg-light bal pvxl phm align-center">
+      <h2 class="h2 mbs">Send Standup Email</h2>
+      <span class="subtitle inline-block mbl"><%= @standup.last_email_time_message %></span>
       <%= form_tag "/standups/#{@standup.id}/posts", method: 'post', class: 'container-form' do %>
           <%= text_field_tag 'post[from]', nil, placeholder: @standup.create_post_sender_field_placeholder %>
           <%= text_field_tag 'post[title]', nil, placeholder: @standup.create_post_subject_field_placeholder, class: 'wide-input' %>
