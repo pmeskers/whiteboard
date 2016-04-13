@@ -17,7 +17,7 @@
       <% if items[kind.name].present? %>
         <% items[kind.name].group_by(&:relative_date).each do |group_name, events| %>
           <% if kind.name == 'Event' || kind.name == 'New face' %>
-            <h3 class="block-subheader ptr <%= group_name %>"><%= group_name.capitalize %></h4>
+            <h3 class="block-subheader ptm <%= group_name %>"><%= group_name.capitalize %></h3>
           <% end %>
           <% events.each do |event| %>
             <%= render partial: 'items/item', object: event, as: 'item' %>
